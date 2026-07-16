@@ -1,0 +1,58 @@
+---
+title: "Templates"
+description: "The ProductOS template directory: 14 real, shipped projects you can open in Build, Design, or Code instead of starting from a blank prompt."
+---
+
+Templates are real, shipped ProductOS projects you can start from instead of a blank prompt. The directory at [productos.dev/templates](https://productos.dev/templates) lists 14 of them, and every entry derives from the [showcase](/resources/showcase): each template is a project that was actually built and deployed on ProductOS, not a mockup.
+
+Templates are common across the three surfaces. Each one has an "Open in" picker that deep-links it into the surface you want to work in.
+
+## Opening a template
+
+| Surface | What happens |
+|---------|--------------|
+| **Open in Build** | Opens [beta.productos.dev](https://beta.productos.dev) with a prompt prefilled from the template, so the full pipeline starts from that idea. |
+| **Open in Design** | Opens the [design.productos.dev](https://design.productos.dev) template gallery to explore it as a design. |
+| **Open in Code** | Clones the template into a live dev sandbox on [develop.productos.dev](https://develop.productos.dev). Templates with a true-clone entry in the Code registry clone directly; the rest open the Code template gallery. |
+
+Five templates have true-clone entries in the Code surface's registry: SOLEN, Echo, StudioFlow, Lumen Notes, and Orbit. Cloning creates a fresh, private project of your own in an isolated cloud sandbox with a live preview URL.
+
+<Tip>
+Volume-backed templates boot in about 3 seconds, versus about 25 seconds for a tarball clone. See [Sandboxes](/code/sandboxes).
+</Tip>
+
+## The directory
+
+| Template | Category | What it is |
+|----------|----------|------------|
+| **SOLEN** | Architecture (Astro) | A residential architecture studio site, the first ProductOS site built on Astro |
+| **ORBIT** | Web game | A hybrid-casual game with its whole business model playable in the browser |
+| **STUDIOFLOW** | Web app | A photography studio's client lifecycle in one pipeline, inquiry to paid |
+| **Lumen Notes** | Web app | A clinical documentation product that turns a therapy session into a signed note |
+| **ECHO** | Web app | A content repurposing SaaS: one podcast episode becomes a week of content |
+| **CASA MIRADOR** | Hospitality site | A clifftop hotel site whose hero glides over the Atlantic |
+| **FORMA** | E-commerce store | A furniture storefront with a cart that actually works |
+| **VELA** | Brand site | A specialty roastery's launch page with a scroll-poured espresso film |
+| **HALO** | Product launch | A smartwatch dissection page in the Apple design language |
+| **RESERVA** | Operations app | Restaurant table management a maitre d' would actually use |
+| **STRIDE** | Coaching platform | An endurance-coaching platform with activity rings |
+| **AETHER** | Brand site | A cinematic athletic-brand launch site, from one prompt to deployed |
+| **LEDGERLINE** | Analytics app | Revenue analytics a CFO would trust, shipped as a working app |
+| **Mainspring** | Brand site | A brand site for an AI-automation agency |
+
+Every template also links to its live deployed site, so you can try the real thing before you clone it.
+
+## Templates and the showcase
+
+The directory is derived from the showcase registry: internal showcase projects with a reusable template appear here. Customer success stories in the showcase do not become templates, because those builds are proprietary to the customer. Read more in [Showcase](/resources/showcase).
+
+## Where to go next
+
+<CardGroup cols={2}>
+  <Card title="Code surface templates" icon="code" href="/code/templates">
+    How cloning works on develop.productos.dev, including the template registry.
+  </Card>
+  <Card title="Design surface templates" icon="palette" href="/design/templates">
+    The design gallery on design.productos.dev.
+  </Card>
+</CardGroup>

@@ -1,0 +1,47 @@
+---
+title: "Mobile apps"
+description: "Build native mobile apps on the Code surface with Expo and React Native: device-frame previews, on-demand databases, and an App Store publish wizard."
+---
+
+The Code surface builds native mobile apps as Expo / React Native projects. Create a project with the mobile type and the same chat-driven workflow applies: describe the app, and the coding agent builds it in a dedicated mobile build environment while you watch a live preview in a device frame.
+
+## The mobile preview
+
+- **Device frames**: the preview renders inside a device frame. A device picker, curated by form factor, lets you switch between phones and tablets, and the frame feeds real device safe-area insets into the preview so it matches on-device chrome. Apps render edge to edge.
+- **Stable preview URL**: the preview is pinned to a stable URL that survives sandbox restarts, so the address does not change under you between sessions.
+- **Branded loading**: your app shows a real splash screen with its own name and icon while loading, and that branding is committed to the project's repository so it persists across rebuilds.
+- **Build feedback**: the preview auto-refreshes when a mobile build completes, with a chime so you notice.
+
+When the agent pushes a fix to the project's repository, use Pull from GitHub to bring it into the running preview; the app hot-reloads with the change.
+
+<Note>
+Mobile projects always run in the dedicated mobile environment. If a project ever resumes onto the wrong environment type, it is detected and recreated automatically, so a mobile project never boots as a web project.
+</Note>
+
+## Databases and storage
+
+Mobile projects get the same on-demand infrastructure as web projects: when your app needs a database, a per-project serverless Postgres database is provisioned and wired into the environment. App file uploads go to private storage and are served through a proxy rather than public URLs.
+
+## Publishing to the App Store
+
+The mobile publish wizard prepares a complete store listing from your actual app, not from generic boilerplate.
+
+### Store metadata
+
+- Listing copy is generated in two stages, first a brief and then the copy, grounded in the real app you built.
+- Your app's existing icon is sourced from its repository automatically.
+- Generated metadata and assets are persisted per project, so they do not regenerate every time you reload the wizard.
+- If the wizard does not have enough context about the app, it shows a single "What is this app?" field to fill the gap.
+
+### Screenshot Mode
+
+Screenshot Mode captures store screenshots directly from your app's live preview:
+
+- Capture any screen; screenshots are named automatically after the app screen they show.
+- Each capture comes in two variants: a clean screenshot with no device chrome, and a framed variant cropped to the device.
+- Screenshots are grouped by device class (iPhone and iPad, or Phone and Tablet), and tablet captures use their own store dimensions.
+- The generated pack includes per-screen captions written from the actual image content, styled with your app's real brand colors.
+
+<Note>
+Generating the full screenshot pack takes around 3 to 5 minutes; the wizard sets that expectation while it works.
+</Note>

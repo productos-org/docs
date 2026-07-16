@@ -1,0 +1,57 @@
+---
+title: "Integrations overview"
+description: "Bring your ProductOS project context into Cursor and Claude over MCP, and sync the full generated codebase to your own GitHub repository."
+---
+
+ProductOS integrations exist to keep your product context intact as it moves between tools. The research, PRD, and design your agents produce form a single record of what you are building and why. Integrations carry that record into the editor you code in and the repository you own, instead of leaving it behind as pasted text.
+
+## What's available
+
+Three integrations are live today.
+
+<CardGroup cols={2}>
+  <Card title="Cursor" icon="terminal" href="/integrations/cursor">
+    Pull your PRD, research, and design context into Cursor over MCP, so the code you write in the editor stays true to the spec.
+  </Card>
+  <Card title="Claude" icon="sparkles" href="/integrations/claude">
+    Connect Claude to your ProductOS project over MCP and reason over the real product context, with no copy-paste and no drift.
+  </Card>
+  <Card title="GitHub" icon="git-branch" href="/integrations/github">
+    Sync the full generated codebase to your own GitHub repo, review real diffs, and deploy from the branch you control.
+  </Card>
+  <Card title="MCP" icon="plug" href="/integrations/mcp">
+    Understand the protocol behind the Cursor and Claude integrations and what ProductOS exposes over it.
+  </Card>
+</CardGroup>
+
+Vercel, Figma, and Slack integrations are on the roadmap: one-click deploys to your own Vercel project, round-tripping generated screens into Figma, and pushing research findings, PRD updates, and ship notifications into Slack channels.
+
+## Why MCP
+
+Cursor and Claude connect over the Model Context Protocol (MCP), an open standard for connecting AI assistants to real context sources. Instead of shipping your product context around as pasted text, ProductOS exposes it as a live source those tools can read and write:
+
+- **Context, not copy-paste.** The AI client reads your live ProductOS project, the brief, the PRD, and the design decisions, instead of a stale snapshot you pasted into a prompt.
+- **One source of truth.** Cursor and Claude both read the same shared context. Whichever tool you open, the assistant sees the same requirements and constraints.
+- **Bidirectional by design.** MCP is a two-way channel. Tools can read your product context and write work back into it, so nothing you do in the editor gets lost.
+
+Read more in [What is MCP](/integrations/mcp).
+
+## How integrations fit the pipeline
+
+<Steps>
+  <Step title="Build context in ProductOS">
+    Research, PRD, and design agents produce the shared context: the single record of what you are building and why.
+  </Step>
+  <Step title="Work in your own tools">
+    Open Cursor or Claude over MCP and code, refine, or reason against that live context instead of a blank page.
+  </Step>
+  <Step title="Own the output on GitHub">
+    Sync the full codebase to your repo, review real diffs, and deploy from the branch you control. There is no export wall.
+  </Step>
+</Steps>
+
+Integrations are the entrances and exits of the ProductOS pipeline, not bolt-ons. GitHub in particular exists to reduce lock-in: the complete codebase lands in your own repository, you can export it at any time, and you deploy it wherever you like. See [Code ownership](/platform/code-ownership).
+
+## Do integrations cost extra?
+
+No. You can start free, and the MCP connection to Cursor and Claude and the GitHub code sync are part of the core ProductOS workflow. Connect them from your project settings and start pulling context into your tools.

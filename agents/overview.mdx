@@ -1,0 +1,75 @@
+---
+title: "The AI product team"
+description: "Meet the ten specialized agents behind ProductOS: what each one does, the order they work in, and how they share one project context."
+---
+
+ProductOS is built around a team of specialized AI agents. You describe your idea once; the team researches it, writes the PRD, designs it, codes it, and deploys it. Each agent is narrow on purpose: it has its own system prompt, its own tools, and one job it does well.
+
+## The roster
+
+<CardGroup cols={2}>
+  <Card title="Orchestrator" icon="workflow" href="/agents/orchestrator">
+    Runs the whole pipeline and routes work to every specialist. The only agent you talk to directly.
+  </Card>
+  <Card title="Ideation Agent" icon="lightbulb" href="/agents/ideation">
+    A Socratic thinking partner that sharpens your raw idea into a testable concept.
+  </Card>
+  <Card title="Research Agent" icon="search" href="/agents/research">
+    A market and feasibility investigator that grounds every claim in a source you can click.
+  </Card>
+  <Card title="PRD Agent" icon="file-text" href="/agents/prd">
+    A requirements writer that works section by section, grounded in your research.
+  </Card>
+  <Card title="Architect Agent" icon="server" href="/agents/architect">
+    An optional system design specialist for the technical half of Define.
+  </Card>
+  <Card title="Design Agent" icon="palette" href="/agents/design">
+    A UI/UX specialist for brand, user flows, and screen specifications.
+  </Card>
+  <Card title="Design System Agent" icon="swatch-book" href="/agents/design-system">
+    A senior visual designer for tokens, components, and real HTML previews.
+  </Card>
+  <Card title="Fullstack Builder" icon="code" href="/agents/fullstack-builder">
+    The implementation agent that writes your actual codebase inside a live sandbox.
+  </Card>
+  <Card title="QA Agent" icon="bug" href="/agents/qa">
+    A real-browser tester that verifies the app actually works, ending in a single verdict.
+  </Card>
+  <Card title="Deploy Agent" icon="rocket" href="/agents/deploy">
+    Owner of the publish pipeline, from sandbox to a live URL you own.
+  </Card>
+</CardGroup>
+
+## Pipeline order
+
+Agents map to the project stages you move through in Build:
+
+| Stage | Agents |
+| --- | --- |
+| All stages | Orchestrator |
+| Stage 1: Ideate | Ideation Agent |
+| Stage 2: Discover | Research Agent |
+| Stage 3: Define | PRD Agent, plus the optional Architect Agent |
+| Stage 4: Design | Design Agent, Design System Agent |
+| Stage 5: Develop | Fullstack Builder |
+| On demand | QA Agent, Deploy Agent |
+
+QA and Deploy are not stages. You run them as on-demand actions: QA whenever you want the app verified, Deploy whenever you want to ship.
+
+## One shared context
+
+The agents do not start from scratch at each stage. Every agent reads the artifacts the previous agents produced, and the Orchestrator maintains a project wiki and cross-agent memory so nothing agreed in one stage gets forgotten in the next.
+
+Concretely, the chain of custody looks like this: the Ideation Agent logs assumptions and open questions; the Research Agent answers them with cited findings; the PRD Agent writes requirements against those artifacts rather than inventing them; the Design and Design System Agents design the product the PRD defines; the Fullstack Builder implements it on the exact design tokens the Design System Agent locked; the QA Agent tests the critical flows listed in the PRD.
+
+<Note>
+You never address a specialist directly. The Orchestrator is the only agent that talks to you; it delegates every research question, PRD section, design decision, and line of code to the right specialist and proposes stage transitions for your approval.
+</Note>
+
+## Model configurability
+
+No agent is hardcoded to a specific model. The model each agent runs on is admin-configurable, and you can bring your own keys instead of using platform credits: Anthropic, OpenAI, or Google keys, or an OpenRouter gateway key. See [BYOK and models](/platform/byok-and-models).
+
+## Where to go next
+
+Start with the [Orchestrator](/agents/orchestrator) to understand how work gets routed, then follow the pipeline in order from [Ideation](/agents/ideation) through [Deploy](/agents/deploy). If you want the stage-by-stage product walkthrough instead of the agent-by-agent view, see the [Build surface overview](/build/overview).

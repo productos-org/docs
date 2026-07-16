@@ -1,0 +1,57 @@
+---
+title: "Security and data"
+description: "How ProductOS handles authentication, where your data is stored, how sandboxes are isolated, and how your provider API keys are encrypted."
+---
+
+This page describes how ProductOS authenticates you, where your data lives, and how workloads are isolated.
+
+## Authentication
+
+All ProductOS surfaces share a single authentication layer, powered by Better Auth and backed by a shared Postgres database. You sign in once and your session works across `beta.productos.dev`, `develop.productos.dev`, and `design.productos.dev`: session cookies are set at the `.productos.dev` domain level, so moving between surfaces never asks you to log in again.
+
+Supported sign-in methods:
+
+- **Google** OAuth
+- **GitHub** OAuth
+- **Email and password**, with password reset emails delivered via Resend using time-limited tokens
+
+Authenticated application routes are protected by middleware: unauthenticated requests are redirected to the login page, and public routes are explicitly allowlisted.
+
+## Where your data lives
+
+| Data | Storage |
+|------|---------|
+| Account, sessions, provider keys | Shared auth database (Neon Postgres) |
+| Projects, research, PRDs, designs, code metadata | Per-surface application databases (Neon Postgres) |
+| File exports and code bundles | AWS S3 |
+| Images and screenshots | Vercel Blob |
+
+Each surface has its own application database; only identity is shared. All web surfaces run on Vercel, with Content Security Policy headers configured per surface to restrict script and resource origins, and CORS configured for legitimate cross-surface calls.
+
+Your generated code has a home you control: it syncs to your own GitHub repository as it is written, and you can export your project in full at any time. See [Code ownership](/platform/code-ownership).
+
+## Sandbox isolation
+
+AI-generated code never runs on your machine or on shared platform hosts. Each project runs in an isolated cloud sandbox (powered by Blaxel) that provides a live preview URL without exposing the host environment.
+
+The sandbox lifecycle is contained end to end:
+
+1. A sandbox is created or resumed for your project
+2. Agents write files, install dependencies, and run builds inside it
+3. A preview URL is returned for the embedded preview
+4. Generated code is persisted to your project
+5. The sandbox is cleaned up after an inactivity timeout
+
+Sandboxes are project-scoped: one sandbox per active project session, so projects cannot see each other's environments.
+
+## API key encryption (BYOK)
+
+If you [bring your own provider keys](/platform/byok-and-models), they are stored AES-256-GCM encrypted in the shared account database. The raw key is never returned to the client after you save it; the UI shows only the last four characters. Keys work across all surfaces without being re-entered.
+
+## Billing data
+
+Payments are processed by Polar, a dedicated payment processor; ProductOS does not handle your card details directly. Usage is metered through a credit ledger, and your usage history includes a per-action breakdown you can review. See [Plans and credits](/getting-started/plans-and-credits).
+
+## Questions
+
+If you have a security question or want to report an issue, contact [enterprise@productos.dev](mailto:enterprise@productos.dev).

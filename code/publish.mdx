@@ -1,0 +1,47 @@
+---
+title: "Publish"
+description: "Ship a Code project to a live URL in one flow: pick a subdomain on product-os.app, watch the deploy, and connect a custom domain on Pro plans."
+---
+
+Publishing takes the project in your sandbox and deploys it to a real, public URL. It is a single flow from the project view: open Publish, pick a subdomain, and watch the deployment go live.
+
+## Publishing a project
+
+<Steps>
+  <Step title="Open the Publish dialog">
+    From your project, open Publish. Publishing always deploys the project's currently selected branch.
+  </Step>
+  <Step title="Choose a subdomain">
+    Pick the subdomain your app will live on. Your app is served at `https://<subdomain>.product-os.app`. If the subdomain is already taken you get a clear conflict error; pick another.
+  </Step>
+  <Step title="Watch the deploy">
+    The dialog shows publishing progress and flips to a deployed view when the app is live, with your live URLs ready to open or copy.
+  </Step>
+</Steps>
+
+You can change the subdomain later from the same dialog; the deployed view includes a subdomain editor along with your domains and analytics for the published site.
+
+Projects created from templates or GitHub imports publish the same way as projects built from scratch.
+
+<Note>
+If a project was published from another ProductOS surface, the Publish dialog shows its published state and live URLs instead of asking you to deploy again.
+</Note>
+
+## Custom domains
+
+Custom domains are available on Pro and above; the Free plan publishes on the platform subdomain only.
+
+To connect your own domain:
+
+1. Deploy the project first, then add your domain in the Publish dialog.
+2. The dialog shows the exact DNS records to create at your DNS provider:
+   - **Apex domains** (like `example.com`) need an A record, since a CNAME is not valid at the zone apex.
+   - **Subdomains** (like `app.example.com`) use a standard CNAME record pointing to `cname.vercel-dns.com`.
+   - Some domains also require a TXT record for verification; when needed, it appears in the same table.
+3. ProductOS keeps checking your domain until every record is verified and the domain is actually serving traffic, so you can watch it go live from the dialog.
+
+You can attach more than one custom domain. One of them is the primary domain, which is the URL used for share links; the platform subdomain keeps working alongside it. Domains can be removed from the same dialog at any time.
+
+## When a deploy fails
+
+Deploy failures are not a dead end. The build log is captured in full and fed back to the coding agent, which can automatically re-drive itself to fix the failure and deploy again.

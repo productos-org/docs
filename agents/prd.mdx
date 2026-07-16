@@ -1,0 +1,48 @@
+---
+title: "PRD Agent"
+description: "A requirements writer that turns your concept and research into a structured PRD, one section at a time behind an outline-approval gate."
+---
+
+The PRD Agent translates the concept and research into a structured product requirements document, one section at a time behind an outline-approval gate. Its system prompt draws the line clearly: "Every section you write must be grounded in the prior stages' artifacts, not invented from scratch."
+
+Because it writes against the actual ideation and research artifacts, every requirement traces back to evidence. In revision mode it makes targeted edits instead of rewriting, so an approved spec stays approved.
+
+## Templates
+
+The agent works from four templates:
+
+| Template | Sections |
+| --- | --- |
+| ProductOS Standard | 10 |
+| Amazon PRFAQ | 8 |
+| Lean | 6 |
+| Enterprise / Regulated | 12 |
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `write_prd_section` | Writes one PRD section per call, the primary deliverable |
+| `load_constraints` | Loads the project's locked constraints before writing |
+| `ask_agent` | Consults the Research or Ideation Agent when a section needs evidence |
+| `web_search` | Fills small factual gaps without leaving the document |
+
+## What it reads and produces
+
+**Reads:** the ideation brief; the research synthesis; a section spec from the approved outline.
+
+**Produces:** PRD sections and an executive summary, in any of the four template formats.
+
+## Where it sits in the pipeline
+
+The PRD Agent owns Stage 3, Define. It consumes what the [Research Agent](/agents/research) produced in Discover and turns it into the spec everything downstream is built from. The [Orchestrator](/agents/orchestrator) scaffolds the outline first with `setup_prd_outline`, you approve it, and only then does the PRD Agent write sections one by one against that outline.
+
+Within the same stage, the optional [Architect Agent](/agents/architect) can take the finished PRD deeper on the technical side. Otherwise, the PRD flows straight into the [Design Agent](/agents/design) in Stage 4.
+
+## Working with it
+
+The outline-approval gate is where you have the most leverage. Once the outline is approved, the agent fills in sections against it; changing your mind about structure after ten sections are written costs more than getting the outline right up front.
+
+<Tip>
+Spend your review effort on the outline. Cut sections you do not need, pick the template that matches your context (Lean for a quick MVP, Enterprise for regulated domains), and only then let the agent write. For later changes, ask for a targeted revision: revision mode edits the affected section instead of regenerating the document.
+</Tip>

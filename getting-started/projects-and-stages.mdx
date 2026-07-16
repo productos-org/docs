@@ -1,0 +1,59 @@
+---
+title: "Projects and stages"
+description: "How a ProductOS project moves through the five-stage pipeline, what each stage produces, and how sandboxes and templates fit in."
+---
+
+A project is the unit of work in ProductOS. It holds the shared context (idea, research, PRD, designs, code) and moves through the pipeline one stage at a time, with the Orchestrator proposing each transition for your approval.
+
+## The five stages
+
+### Ideation
+
+You brief the Orchestrator on your idea, and the Ideation Agent takes over as a Socratic questioner. Rather than agreeing with everything, it probes the idea, logs your assumptions explicitly, and maintains a list of open questions. The output is a sharper idea and an honest record of what you do not yet know.
+
+### Research (Discover)
+
+The Research Agent turns open questions into cited findings. It draws on multiple sources: web search via Exa, Reddit, G2 and Trustpilot reviews, app stores, and GitHub, and it can run surveys. Because findings land in the shared project context, every later stage builds on them.
+
+### PRD / Define
+
+The PRD Agent writes the product requirements document, but only after you approve its outline. It then drafts section by section. Four templates are available:
+
+| Template | Sections |
+|----------|----------|
+| ProductOS Standard | 10 |
+| Amazon PRFAQ | 8 |
+| Lean | 6 |
+| Enterprise/Regulated | 12 |
+
+Optionally, the Architect Agent extends the Define stage with 8 architecture sections, architecture decision records (ADRs), and infra cost estimates.
+
+### Design
+
+Two agents share this stage. The Design Agent produces user flows and screen specs. The Design System Agent generates design tokens, a DESIGN.md, and HTML previews in both dark and light themes. Together they give the build stage a concrete, reviewable visual target before any application code is written.
+
+### Develop
+
+The Fullstack Builder, a real coding agent, works headlessly inside your project's sandbox. Code appears in a live preview as it is written, and it syncs continuously to your own GitHub repository. See [Code ownership](/platform/code-ownership).
+
+## QA and Deploy: actions, not stages
+
+<Note>
+  QA and Deploy sit outside the stage sequence. Trigger them on demand, at any point, as often as you need.
+</Note>
+
+- **QA** runs your app in a real headless Chromium browser: flows, per-route screenshots, API checks, and an axe accessibility audit. It returns a verdict of pass, partial, or fail, and a fail can chain into an auto-fix run.
+- **Deploy** checks for a recent deploy first, runs a preflight build, pushes to GitHub, and deploys to Vercel with up to 3 self-fix iterations. Apps ship to `{slug}.product-os.app` or a custom domain.
+
+## Sandboxes: where projects run
+
+Each project runs in an isolated cloud sandbox (powered by Blaxel) with a live preview URL. The sandbox is where agents install dependencies, write files, and run builds, so nothing touches your machine and you can watch progress in the embedded preview.
+
+## Starting from a template
+
+You do not have to start from a blank idea. Curated templates (for example SOLEN, Echo, StudioFlow, Lumen Notes, and Orbit on the Code surface) clone into a fresh private project you fully own. Volume-backed templates boot in about 3 seconds, versus about 25 seconds for tarball-based ones. Browse the full directory at [productos.dev/templates](https://productos.dev/templates), which lists 14 templates.
+
+## Next steps
+
+- [Plans and credits](/getting-started/plans-and-credits): how usage is billed
+- [Build surface overview](/build/overview): the full pipeline in depth

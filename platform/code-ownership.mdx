@@ -1,0 +1,47 @@
+---
+title: "Code ownership"
+description: "Everything ProductOS generates is yours: code syncs to your own GitHub repo as it is written, with full export and no lock-in."
+---
+
+ProductOS is built on a simple principle: the output belongs to you. Agents do the work, but the code, the PRD, the research, and the designs are your assets, in formats you can take anywhere.
+
+## Your code lives in your GitHub repo
+
+Generated code syncs to your own GitHub repository as it is written, not as a one-time export at the end. While the Fullstack Builder works in the project sandbox, the codebase accumulates in a repo you control, under your account, with your access rules.
+
+This has practical consequences:
+
+- **No export step to remember.** The repo is always current with what the agents have built.
+- **Normal tooling works.** Clone the repo, open it in your editor, run it locally, wire up your own CI. It is a standard codebase, not a proprietary bundle.
+- **Deploys go through your repo.** The Deploy Agent pushes to GitHub before deploying to Vercel, so what is live always corresponds to a commit you can see.
+
+## Full export, no lock-in
+
+You can export your project in full at any time. There is no proprietary runtime your app depends on and no format you have to convert out of. If you stop using ProductOS tomorrow, you keep a working codebase, your PRD, your research, and your design specs.
+
+<Note>
+  Templates follow the same rule: a curated template clones into a fresh private project that is entirely yours to modify, own, and ship.
+</Note>
+
+## More than code
+
+Ownership extends to the whole shared project context:
+
+| Asset | What you get |
+|-------|--------------|
+| Code | Synced to your GitHub repo, fully exportable |
+| PRD | A structured document you approved section by section |
+| Research | Multi-source findings with citations |
+| Designs | User flows, screen specs, design tokens, DESIGN.md, HTML previews |
+
+Your project context is also available in Cursor and Claude over [MCP](/integrations/mcp), so external tools can read the same PRD, research, and designs your agents work from. The platform is useful because of what it does, not because it holds your work hostage.
+
+## Working outside ProductOS
+
+A common pattern: let ProductOS carry a project through research, PRD, design, and the first working build, then continue development in your own environment against the synced repo. Nothing about the generated code assumes ProductOS is still in the loop. You can also keep both going, using ProductOS for agent-driven features and your editor for hand-written changes, since both operate on the same repository.
+
+## Related pages
+
+- [GitHub sync](/code/github-sync): how the sync works on the Code surface
+- [Deployments and domains](/platform/deployments-and-domains): how shipping works
+- [Security and data](/platform/security-and-data): where your data lives

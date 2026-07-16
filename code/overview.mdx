@@ -1,0 +1,72 @@
+---
+title: "Code surface overview"
+description: "The Code surface at develop.productos.dev is an AI app builder: describe what you want in chat and a coding agent builds it in a live cloud sandbox."
+---
+
+The Code surface, at [develop.productos.dev](https://develop.productos.dev), is the ProductOS AI app builder. You describe what you want in chat; a real coding agent works headlessly inside your project's sandbox, writing files, installing dependencies, and running the dev server while you watch the result in a live preview. It shares your ProductOS account and credits with the Build and Design surfaces.
+
+## What you can build
+
+| Project type | Stack | Notes |
+|---|---|---|
+| Web app | Next.js | Full-stack apps with a database provisioned on demand |
+| Website | Astro | Marketing and content sites |
+| Mobile app | Expo / React Native | Native apps with a device-frame preview; see [Mobile](/code/mobile) |
+
+You can start from a blank prompt, from a [template](/code/templates), or by importing an existing GitHub repository.
+
+## The workspace
+
+A project opens on the live preview, with chat on the left and the preview taking most of the screen. From there:
+
+- **Preview** shows your running app at a live URL, backed by an isolated cloud [sandbox](/code/sandboxes). A toolbar button opens it in a new tab.
+- **Code view** gives you the full file tree with an always-open file search, so you can read exactly what the agent wrote.
+- **Storage** shows files your app stores through its per-project file storage.
+
+Each project keeps its work in named sessions. You can rename sessions inline and switch between them from a dropdown in the project view.
+
+## Build mode and Plan mode
+
+The composer has a Build/Plan toggle, shared between the home screen and project chat:
+
+- **Build** sends your request straight to the coding agent.
+- **Plan** has the agent lay out an approach first, so you can review the plan before code changes happen. Plan mode is marked with an orange accent so you always know which mode you are in.
+
+The agent follows a task-completion protocol: it works through a multi-step plan to the end without needing a nudge between steps.
+
+## Pointing at things
+
+Instead of describing a UI element in words, use the Select tool on the preview. Click any element and it appears in chat as a card showing the source file and line it came from, so your next instruction targets exactly that element. When you select an image, an Update Image button lets you swap it directly.
+
+You can also attach files to a message. All file types are accepted, including text files, code files, and zip archives, and they reach the agent as context.
+
+## Databases, storage, and secrets
+
+- **Database**: when your app needs one, the agent provisions a per-project serverless Postgres database on demand and wires the connection string into the sandbox environment. This works the same for web and mobile projects.
+- **File storage**: built apps can provision their own file storage for uploads and assets, visible in the project's Storage tab.
+- **Secrets**: when the agent needs an API key or other secret from you, it asks through a secrets request in chat rather than having you paste values into code.
+
+## When something breaks
+
+Built apps detect their own runtime errors and report them back to the builder, so the agent can see what went wrong in the running app, not just in the build log. Deployment failures feed back too: the agent reads the complete build log and re-drives itself to fix the problem.
+
+## Your code stays yours
+
+Generated code is pushed to a Git repository as it is written, and you can sync it to your own GitHub account or export everything at any time. See [GitHub sync](/code/github-sync) and [Code ownership](/platform/code-ownership).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Sandboxes" icon="box" href="/code/sandboxes">
+    How the isolated cloud environments behind every project work.
+  </Card>
+  <Card title="Templates" icon="layout-template" href="/code/templates">
+    Clone a curated starter into a fresh project in seconds.
+  </Card>
+  <Card title="GitHub sync" icon="github" href="/code/github-sync">
+    Push to your own repo, pull changes, or import an existing project.
+  </Card>
+  <Card title="Publish" icon="rocket" href="/code/publish">
+    Ship your project to a live URL, with custom domains on Pro.
+  </Card>
+</CardGroup>

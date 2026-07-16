@@ -1,0 +1,49 @@
+---
+title: "Sandboxes"
+description: "Every Code project runs in its own isolated cloud sandbox with a live preview URL. Learn the lifecycle, cold boot behavior, and plan-based resources."
+---
+
+Every project on the Code surface runs in its own isolated cloud sandbox: a disposable environment with a file system, a terminal, and a running dev server. The coding agent works inside the sandbox, and you watch the result through a live preview URL embedded in the workspace. Nothing runs on your machine, and AI-generated code never touches the ProductOS host environment.
+
+## One sandbox per project
+
+Sandboxes are project-scoped. Opening a project either reconnects to its existing sandbox or provisions a fresh one. The lifecycle looks like this:
+
+1. **Create**: a sandbox is provisioned when the project needs one.
+2. **Execute**: the agent writes files, installs dependencies, and runs build commands.
+3. **Preview**: a live URL is returned and embedded in the workspace, with an option to open it in a new tab.
+4. **Teardown**: after a period of inactivity, the sandbox is cleaned up. Your code is safe; it lives in the project's Git repository, not only in the sandbox.
+
+Mobile projects use a dedicated mobile build environment rather than the web one. If a mobile project ever resumes onto the wrong environment type, it is detected and recreated automatically. See [Mobile](/code/mobile).
+
+## Cold boots
+
+When you return to a project whose sandbox has been torn down, ProductOS restores it: it pulls your code back in, reinstalls anything missing, and restarts the dev server. A boot loader shows progress while this happens.
+
+A few things keep cold boots short:
+
+- **Prewarming**: after your code is pulled in, the home route is compiled ahead of time, so you do not pay a cold compile on your first navigation.
+- **Volume-backed templates**: curated templates that ship with a prepared volume boot in about 3 seconds instead of roughly 25 seconds for the standard import path. See [Templates](/code/templates).
+- **A hard ceiling on the loader**: if the preview cannot be restored within the time limit (150 seconds by default), you get an actionable error with options to try again or start a build, instead of an indefinite spinner.
+
+<Note>
+The preview loader is dismissed when the app actually responds, not on a fixed timer. If you see the loader for a while on a large project, the sandbox is still compiling; it will hand off as soon as the app serves a real page.
+</Note>
+
+## Resources by plan
+
+Sandbox memory is sized by your plan, so heavier builds get more headroom:
+
+| Plan | Sandbox RAM |
+|---|---|
+| Free | 8 GB |
+| Pro | 16 GB |
+| Max | 32 GB |
+
+Credit consumption is tracked per sandbox session and per AI call; you can review it on your usage page. See [Plans and credits](/getting-started/plans-and-credits).
+
+## Security notes
+
+- Sandboxes are isolated from each other and from ProductOS infrastructure.
+- Platform credentials never enter your sandbox. For example, when a template is cloned for you, the download happens server-side and only the extracted files reach the sandbox.
+- Your project's canonical code lives in Git, so a torn-down sandbox never means lost work.

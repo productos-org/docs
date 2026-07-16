@@ -1,0 +1,58 @@
+---
+title: "Templates"
+description: "Clone a curated starter into a fresh private project on the Code surface. Volume-backed templates boot in about 3 seconds with a live preview."
+---
+
+The Code surface has a template gallery of curated, real applications you can clone into your own project. A template is not a mockup: it is a working codebase that boots in a sandbox with a live preview, and once cloned it is entirely yours to edit, sync to GitHub, and publish.
+
+## Curated templates
+
+The gallery lists templates that are verified to clone and boot end to end:
+
+| Template | What it is | Stack |
+|---|---|---|
+| SOLEN | Architecture studio site | Astro |
+| Echo | Content repurposing studio | Next.js |
+| StudioFlow | CRM for photographers | Next.js |
+| Lumen Notes | AI clinical documentation | Next.js |
+| Orbit | Hybrid-casual web game | Next.js |
+
+The [templates directory on the website](https://productos.dev/templates) lists 14 templates across the platform; the gallery on the Code surface is the curated, one-click-cloneable subset.
+
+<Note>
+Some gallery entries are showcase-only: customer-built projects shown as proof of what the platform can do. Those link to the live site and cannot be cloned.
+</Note>
+
+## Using a template
+
+<Steps>
+  <Step title="Pick a template">
+    Open the template gallery on the Code surface and choose a template.
+  </Step>
+  <Step title="Sign in if you are not already">
+    Using a template requires an account. If you are signed out, you are sent to sign-in and returned to the template flow afterward.
+  </Step>
+  <Step title="A private project is created">
+    ProductOS creates a fresh, private project in your workspace and clones the template's source into it. The clone happens server-side with platform credentials, so you do not need to connect a GitHub account for this.
+  </Step>
+  <Step title="The sandbox boots with a live preview">
+    The template's code lands in a new sandbox and the dev server starts. You get a live preview URL and can immediately start editing through chat.
+  </Step>
+</Steps>
+
+## Boot speed: the volume fast path
+
+Templates load into the sandbox one of two ways:
+
+- **Volume-backed** (the fast path): curated templates with a prepared volume mount their content directly into the sandbox and boot in about 3 seconds.
+- **Standard import**: templates without a volume are downloaded and extracted into the sandbox, which takes roughly 25 seconds.
+
+Either way you end up with the same thing: the full source in your own private project. The fast path only changes how quickly the first preview appears.
+
+## After you clone
+
+A cloned template behaves like any other Code project:
+
+- Edit it through chat with the coding agent, or point at elements with the Select tool.
+- Sync the code to your own GitHub repository. See [GitHub sync](/code/github-sync).
+- Publish it to a live URL. Projects created from templates can be published like any other project. See [Publish](/code/publish).

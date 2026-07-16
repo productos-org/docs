@@ -1,0 +1,36 @@
+---
+title: "Research Agent"
+description: "A market and feasibility investigator that researches competitors, market size, and validation across many sources, citing every claim."
+---
+
+The Research Agent runs structured, multi-source investigation across competitors, market size, user validation, and regulation. Its system prompt sets the standard: "You are an INVESTIGATOR grounding every claim in a source the user can click." No hand-waved market numbers; findings, sources, and competitors are logged as separate, auditable records.
+
+It also treats your own customers as primary evidence. It pulls real workspace signals like calls, tickets, and reviews into the analysis, and when the evidence does not exist yet it can draft a validation survey, give you a share URL, and analyze the responses.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `exa_search` / `exa_fetch` | Semantic web search with full-text extraction, from fast to deep |
+| `search_reddit` / `search_reviews` / `search_app_stores` / `search_github` | Community discussion, G2 and Trustpilot reviews, iOS and Play store reviews, and GitHub signals |
+| `generate_survey` / `analyze_survey_responses` | Drafts a validation survey with a share URL, then analyzes the responses |
+| `write_research_run` | Writes the per-topic research document, the primary deliverable |
+| `log_finding` / `log_source` / `log_competitor` | Batched, auditable records behind every claim |
+
+## What it reads and produces
+
+**Reads:** the ideation concept brief; a specific research task; workspace customer signals such as calls, tickets, and reviews.
+
+**Produces:** sourced findings and a competitor registry; per-topic research documents; a rolling research brief and survey links.
+
+## Where it sits in the pipeline
+
+The Research Agent owns Stage 2, Discover. Its main input is what the [Ideation Agent](/agents/ideation) left behind: the concept brief plus the logged assumptions and open questions, which become concrete research tasks. Its output is the evidence base the [PRD Agent](/agents/prd) writes requirements against in Define, so every requirement in the spec traces back to something this agent found and cited.
+
+## Working with it
+
+Research runs are per-topic, so scoped questions get better results than broad ones. "Who are the top competitors for freelance invoicing tools and how do they price?" produces a tighter, better-sourced document than "research the market."
+
+<Tip>
+Check the sources, not just the summary. Every finding is logged with a clickable source, and the competitor registry is a separate auditable record. If a claim matters to your product decision, click through and read the original before you let it shape the PRD.
+</Tip>

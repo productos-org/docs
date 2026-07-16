@@ -1,0 +1,35 @@
+---
+title: "Design Agent"
+description: "A UI/UX specialist that turns your concept, research, and PRD into user flows and screen specifications for the product you defined."
+---
+
+The Design Agent reads everything the earlier stages produced, the concept, the research, and the PRD, and turns it into user flows and UI screen specifications. Its system prompt frames it as "a product design specialist focused on brand identity, user flows, and UI screen specifications." Because it designs from the actual spec, the screens are for the product you defined, not a generic template.
+
+It keeps your workspace in sync while it works, switching the active design tab as it moves through brand, flows, and screens, and it hands token and component-system work to the [Design System Agent](/agents/design-system).
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `write_design_doc` | Writes brand, flow, screen, and report documents, the primary deliverable |
+| `get_user_flows` / `set_user_flows` | Reads and updates the project's user-flow diagrams |
+| `get_brand_guidelines` / `generate_mood_board` | Works with the locked brand direction and visual references |
+| `ask_agent` | Consults the Design System Agent or upstream agents |
+
+## What it reads and produces
+
+**Reads:** the concept and research; the PRD; the locked brand direction.
+
+**Produces:** user-flow diagrams; UI screen specifications; design documents and reports.
+
+## Where it sits in the pipeline
+
+The Design Agent opens Stage 4, Design, taking over from the [PRD Agent](/agents/prd) (or the [Architect Agent](/agents/architect), if you ran the optional architecture pass). It works alongside the [Design System Agent](/agents/design-system) in the same stage: this agent owns flows and screen specs, that one owns tokens, components, and DESIGN.md. Its screen specifications are what the [Fullstack Builder](/agents/fullstack-builder) implements in Develop.
+
+## Working with it
+
+The agent designs against two anchors: the PRD and the locked brand direction. The PRD comes from the previous stage; the brand direction comes from brand setup, which the [Orchestrator](/agents/orchestrator) can run automatically (palette, font pairing, vibe report).
+
+<Tip>
+Settle the brand direction before the screens. The agent reads the locked brand guidelines through `get_brand_guidelines` and designs every screen against them, so a brand change after the fact ripples through every flow and spec. If you have strong visual opinions or reference products, get them into the brand direction first; asking for a mood board is a cheap way to check alignment before any screens exist.
+</Tip>

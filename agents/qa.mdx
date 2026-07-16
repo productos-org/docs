@@ -1,0 +1,38 @@
+---
+title: "QA Agent"
+description: "A real-browser tester that drives headless Chromium against your app, checks flows, APIs, and accessibility, and returns one verdict."
+---
+
+The QA Agent drives a real headless Chromium browser against your app's preview URL, screenshotting after every action. Its system prompt states the job plainly: "Your job: verify whether the user's app actually works."
+
+It covers four areas: critical user flows from the PRD, per-route visual checks, backend API checks, and accessibility plus console errors. Every run ends in a single verdict, pass, partial, or fail, with severity-ranked findings and suggested fixes. A fail can chain straight into an automated fix run by the Fullstack Builder, closing the loop without you triaging bug reports.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `navigateTo` / `clickElement` / `typeText` / `assertVisible` | Drives the real browser through your app's critical flows |
+| `takeScreenshot` / `observePage` | Captures visual evidence after every action |
+| `listRoutes` / `callApi` / `assertApiResponse` | Exercises the backend API surface directly |
+| `runAxeAudit` / `getConsoleErrors` / `getNetworkErrors` | Accessibility audit plus console and network error sweeps |
+| `log_finding` / `write_qa_report` | Severity-ranked findings and the final verdict report |
+
+## What it reads and produces
+
+**Reads:** the live preview URL; critical flows from the PRD; the app's route map.
+
+**Produces:** a verdict of pass, partial, or fail; severity-ranked findings with screenshots; suggested fixes, chainable into an auto-fix run.
+
+## Where it sits in the pipeline
+
+QA is an on-demand action, not a stage: you run it whenever you want the app verified, typically after the [Fullstack Builder](/agents/fullstack-builder) has built or changed something significant. Because the critical flows it tests come from the PRD, it is checking the app against your spec, not against a generic checklist. A sensible rhythm is build, QA, fix, then hand off to the [Deploy Agent](/agents/deploy) once you have a pass.
+
+The browser is real: headless Chromium driven through Browserbase or Steel with Stagehand, and the accessibility audit is a real axe run, not a heuristic.
+
+## Working with it
+
+The verdict is designed to be actionable without triage. Findings arrive severity-ranked with screenshots of the exact moment something went wrong, and each includes a suggested fix.
+
+<Tip>
+Let a fail verdict do the work. Instead of reading the findings and describing the bugs back in chat, chain the fail into an auto-fix run: the findings flow to the Fullstack Builder as a targeted fix task, and you re-run QA afterward to confirm the verdict flipped. Your review effort is better spent on partial verdicts, where judgment calls about severity actually matter.
+</Tip>

@@ -1,0 +1,56 @@
+---
+title: "Build overview"
+description: "How the Build surface runs the full product pipeline, from raw idea to deployed app, with one shared project context across every stage."
+---
+
+Build ([beta.productos.dev](https://beta.productos.dev)) is the flagship ProductOS surface: the full idea-to-deploy pipeline. You describe your product once, and a team of specialized AI agents researches it, writes the PRD, designs it, codes it, and ships it, all sharing one project context. Nothing agreed in one stage gets forgotten in the next.
+
+## How it works
+
+You talk to one agent: the [Orchestrator](/agents/orchestrator). It never does the domain work itself; every research question, PRD section, design decision, and line of code is routed to the right specialist. It maintains a project wiki, keeps a rolling progress ledger, and proposes stage transitions for your approval, so the project only advances when you say so.
+
+Each stage's output becomes the next stage's input. The PRD is written against your actual research; the screens are designed against your actual PRD; the code implements your actual screens on your locked design tokens.
+
+## The stage map
+
+| Stage | What it produces | Agent |
+|-------|------------------|-------|
+| 1. Ideate | Concept brief: problem, target user, assumptions, open questions | [Ideation Agent](/agents/ideation) |
+| 2. Discover | Sourced findings, competitor registry, research documents | [Research Agent](/agents/research) |
+| 3. Define | The PRD, section by section behind an outline-approval gate | [PRD Agent](/agents/prd) |
+| 3b. Architecture (optional) | Architecture sections, ADRs, infrastructure cost estimates | [Architect Agent](/agents/architect) |
+| 4. Design | Brand, user flows, screen specs, the design system | [Design Agent](/agents/design), [Design System Agent](/agents/design-system) |
+| 5. Develop | The application codebase, with a live preview in the sandbox | [Fullstack Builder](/agents/fullstack-builder) |
+
+QA and Deploy are not stages; they are on-demand actions you can trigger whenever there is something to test or ship. The [QA Agent](/agents/qa) drives a real browser against your app and returns a verdict; the [Deploy Agent](/agents/deploy) takes the project from the sandbox to a live URL.
+
+<Note>
+Stage transitions are proposed, not automatic. When a stage's work is done, the Orchestrator proposes the move; you confirm it. Telling it to move on is consent to advance.
+</Note>
+
+## Where the work lives
+
+Projects run in isolated cloud sandboxes with live preview URLs, so you can see the app as it is built. Generated code syncs to your own GitHub repo as it is written: full export, no lock-in. Your project context (PRD, research, designs) is also available in Cursor and Claude over MCP.
+
+## Build vs Code vs Design
+
+One account, credits shared across all three surfaces. Pick the one that matches how much of the pipeline you need.
+
+<CardGroup cols={2}>
+  <Card title="Build" icon="workflow" href="/build/ideation">
+    The full pipeline. Use it when you want research, a PRD, designs, and a shipped product from one idea, with the whole trail documented.
+  </Card>
+  <Card title="Code" icon="code" href="/code/overview">
+    The AI app builder with a live sandbox. Use it when you already know what to build and want to go straight to working code.
+  </Card>
+  <Card title="Design" icon="palette" href="/design/overview">
+    UI generation and templates. Use it when you need screens, brand systems, or design assets without the rest of the pipeline.
+  </Card>
+  <Card title="Agents" icon="users" href="/agents/overview">
+    Meet the full roster: what each agent reads, produces, and how to steer it.
+  </Card>
+</CardGroup>
+
+## Start here
+
+Each stage has its own page covering what it produces, which agent runs it, what context it reads, and how you steer it: [Ideation](/build/ideation), [Research](/build/research), [PRD](/build/prd), [Architecture](/build/architecture), [Design](/build/design-stage), [Develop](/build/develop-stage), then [QA](/build/qa) and [Deploy](/build/deploy) on demand.

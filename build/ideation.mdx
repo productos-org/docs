@@ -1,0 +1,42 @@
+---
+title: "Ideation"
+description: "How the Ideation stage turns a raw idea into a sharp, testable product concept through Socratic questioning, not invention."
+---
+
+Ideation is the first stage of the Build pipeline. Its job is to turn a raw idea into a concept sharp enough to research and build, before any money or build time is spent.
+
+## What the stage produces
+
+- A concept brief that states the problem, the target user, and what must be true for the product to work
+- A log of the assumptions the concept depends on
+- A log of open questions for the Research Agent to answer in the next stage
+
+## Who runs it
+
+The [Ideation Agent](/agents/ideation) is a Socratic thinking partner. Its own system prompt puts it plainly: "You are a QUESTIONER who draws the concept out of the user." It is explicitly not a writer that invents a concept for you. It asks, you answer, and the concept takes shape from your answers.
+
+While you talk, it works with a small, focused toolset: it records unresolved questions (`log_open_question`) and assumptions (`log_assumption`), checks claims against the live web as they come up, consults a peer agent (typically Research) for a quick fact-check, and maintains the rolling concept brief as a markdown document.
+
+## What it reads
+
+- Your raw idea, in whatever shape you bring it
+- Any prior concept brief, if you are revisiting an existing project
+- The project wiki maintained by the Orchestrator
+
+## How you steer it
+
+Ideation is the most conversational stage, and the steering is the conversation itself. A few things that help:
+
+- **Answer honestly, including "I don't know."** Unknowns are not failures here; they become logged open questions that Discover will investigate with real sources.
+- **Push back on framings that feel wrong.** The brief is rolling, so corrections are folded in as you go rather than requiring a rewrite.
+- **Name your assumptions when you notice them.** The agent logs assumptions it surfaces, but you can flag your own and they go into the same record.
+
+<Tip>
+The open-questions log is the handoff contract with the next stage. The more precisely a question is stated during Ideation, the more useful the sourced answer from Research will be.
+</Tip>
+
+## What happens next
+
+When the concept is sharp, the [Orchestrator](/agents/orchestrator) proposes the transition to the Discover stage for your approval. The [Research Agent](/agents/research) then picks up the concept brief and the open-questions log as its starting inputs, and grounds each question in sources you can click.
+
+Continue to [Research](/build/research).

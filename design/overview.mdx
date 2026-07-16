@@ -1,0 +1,39 @@
+---
+title: "Design surface overview"
+description: "The Design surface at design.productos.dev generates UI: full design systems from a text prompt, a remixable template gallery, and brand import."
+---
+
+The Design surface, at [design.productos.dev](https://design.productos.dev), is the ProductOS home for UI generation. It extends the Code surface with design-specific capabilities: generating complete design systems from a description, a template gallery you can remix, brand import from an existing website, and Figma integration. It shares your ProductOS account and credits with the Build and Code surfaces.
+
+## What you can do here
+
+<CardGroup cols={2}>
+  <Card title="Generate a design system" icon="palette" href="/design/brand-and-design-systems">
+    Describe a look in a sentence or two and get a full design system: tokens, a DESIGN.md spec, and dark plus light previews.
+  </Card>
+  <Card title="Remix a template" icon="layout-template" href="/design/templates">
+    Browse the gallery by category, preview any template live, and remix it into your own project.
+  </Card>
+  <Card title="Import a brand" icon="globe" href="/design/brand-and-design-systems">
+    Point at an existing website and the surface extracts its colors and generates a design system from it.
+  </Card>
+  <Card title="Build on it" icon="code" href="/code/overview">
+    Design projects run in the same live sandboxes as Code projects, so a generated design is a working site, not a static image.
+  </Card>
+</CardGroup>
+
+## Real, running designs
+
+Generated designs are working code in an isolated cloud sandbox with a live preview, the same infrastructure the Code surface uses. That means every design you generate can be inspected, iterated on in chat, screenshotted, and taken all the way to a deployed site. See [Sandboxes](/code/sandboxes).
+
+Beyond the core flow, the surface includes a visual design editor with AI-assisted component generation, Figma import and export integration, and 3D website generation built on Three.js and React Three Fiber.
+
+## Design systems everywhere
+
+A design system created here is not decoration; it is a set of machine-readable artifacts (design tokens, a DESIGN.md specification, and HTML previews) that agents across ProductOS consume when they build UI. The Design System Agent on the Build surface produces the same artifacts as part of the full pipeline. See the [Design System Agent](/agents/design-system).
+
+## Where to start
+
+1. Open [design.productos.dev](https://design.productos.dev). You can browse templates without an account; generating and remixing require sign-in, and the free tier needs no credit card.
+2. Either describe a design system you want, import a brand from a URL, or remix a template.
+3. Iterate in chat, then take the result to GitHub or a live URL like any other ProductOS project.

@@ -1,0 +1,55 @@
+---
+title: "Core concepts"
+description: "The three ideas behind ProductOS: one shared project context, a staged pipeline, and specialized agents coordinated by an Orchestrator."
+---
+
+ProductOS rests on three ideas. Understand them and everything else in these docs falls into place.
+
+## Shared context
+
+Every project has one context that all agents read from and write to. Your idea, the ideation transcript, research findings, the PRD, architecture decisions, and design specs accumulate in one place instead of being scattered across tools.
+
+This is the difference between ProductOS and a collection of point tools. When the PRD Agent writes a requirements section, it cites the Research Agent's findings. When the Fullstack Builder writes code, it builds against the Design Agent's screen specs. You never paste context from one stage into the next; the pipeline carries it.
+
+The shared context is also portable: it is available in Cursor and Claude over [MCP](/integrations/mcp), so external tools can build against the same PRD, research, and designs.
+
+## The pipeline
+
+Product work moves through five stages, in order:
+
+```
+Ideation -> Research (Discover) -> PRD / Define -> Design -> Develop
+```
+
+| Stage | What happens |
+|-------|--------------|
+| **Ideation** | The idea is sharpened; assumptions and open questions are logged |
+| **Research** | Multi-source, cited research into the market, competitors, and users |
+| **PRD / Define** | A structured PRD, written section by section behind an outline-approval gate. Optionally includes an Architecture pass |
+| **Design** | User flows, screen specs, design tokens, and HTML previews |
+| **Develop** | A real coding agent builds the app in an isolated sandbox with live preview |
+
+Two things you might expect to be stages are not:
+
+<Note>
+  **QA and Deploy are on-demand actions, not stages.** You can run QA or deploy at any point, as many times as you like, without moving the project through a stage gate.
+</Note>
+
+Stage transitions are proposed by the Orchestrator and approved by you. The pipeline gives you leverage without taking away control: nothing advances until you say so.
+
+## Agents vs stages
+
+Agents and stages are related but not the same thing:
+
+- A **stage** is a phase of the project with a defined output (research findings, a PRD, screen specs, working code).
+- An **agent** is a specialist that does work, usually within one stage.
+
+The **Orchestrator** sits above both. It routes all work, is the only agent that talks to you, and proposes stage transitions. Every other agent is a specialist it delegates to: the Ideation Agent in Ideation, the Research Agent in Research, the PRD and Architect Agents in Define, the Design and Design System Agents in Design, and the Fullstack Builder in Develop (labeled "Frontend Engineer" when it works in the Design stage).
+
+The QA Agent and Deploy Agent map to the on-demand actions rather than stages: they can be invoked whenever there is something to test or ship.
+
+See the [agents overview](/agents/overview) for the full roster and what each specialist does.
+
+## How this plays out
+
+A typical loop looks like this: you talk to the Orchestrator, it delegates to a specialist, the specialist writes its output into the shared context, and the Orchestrator proposes moving to the next stage. You approve, and the next specialist picks up everything produced so far. The result is a product built by a team that never loses the thread.

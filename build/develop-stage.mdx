@@ -1,0 +1,46 @@
+---
+title: "Develop"
+description: "How the Develop stage turns your spec and design system into a real codebase, built by a coding agent inside a live cloud sandbox."
+---
+
+Develop is the fifth stage of the Build pipeline: implementation. A real coding agent works headless inside your project's cloud sandbox, editing files and running commands directly against a pre-installed Next.js project, with a live preview you can watch as it builds.
+
+## What the stage produces
+
+- The application codebase, written in your project's sandbox
+- A live dev preview URL that updates as the app is built
+- Code that syncs to your own GitHub repo as it is written: full export, no lock-in
+
+## Who runs it
+
+The [Fullstack Builder](/agents/fullstack-builder). It is not a code generator that returns a blob of files; it is a full coding agent with the complete sandbox toolset, reading, writing, and editing files and running shell commands, iterating the way an engineer does. In the Design stage the same agent appears as the Frontend Engineer; in Develop it builds the whole stack.
+
+One rule shapes the whole system here: the Orchestrator is forbidden from writing code itself. As its prompt puts it, "Code belongs to the Develop sub-agent." Every implementation task is delegated to the builder.
+
+Long-running build tasks execute as durable background jobs, broken into checkpointed steps, so a failure in one step retries that step rather than restarting the whole run.
+
+## What it reads
+
+- The design system tokens and `DESIGN.md` from the [Design stage](/build/design-stage)
+- The PRD from [Define](/build/prd), plus architecture documents if you ran that sub-phase
+- The concrete build task delegated by the Orchestrator
+
+Because it consumes the locked tokens and the actual spec, the code implements the product you specified, screen for screen, on the design system your Design System Agent locked, not on framework defaults.
+
+## The sandbox and live preview
+
+Every project runs in an isolated cloud sandbox with a live preview URL. You watch the app take shape as the builder works, and the same preview URL is what the [QA Agent](/agents/qa) later drives a real browser against.
+
+## How you steer it
+
+- **Delegate concrete tasks from the chat.** "Build the onboarding flow" lands better than "keep going"; the builder receives a specific task each run.
+- **Use the live preview as your review surface.** React to the running app, not to code diffs, and feed corrections back through the Orchestrator as new build tasks.
+- **Let QA close the loop on bugs.** Instead of hand-triaging what looks broken, run [QA](/build/qa); a failed verdict can chain directly into a targeted auto-fix run by the builder (`delegate_to_develop_fix`).
+
+<Note>
+The code is yours throughout. It syncs to your GitHub repo as it is written, so you can pull it into Cursor or any editor at any point; ProductOS project context is also available over MCP.
+</Note>
+
+## What happens next
+
+Develop is the last pipeline stage. From here, [QA](/build/qa) and [Deploy](/build/deploy) are on-demand actions: test whenever there is something to verify, ship whenever you are ready.

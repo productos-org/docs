@@ -1,0 +1,35 @@
+---
+title: "Architect Agent"
+description: "An optional system design specialist that turns your PRD into architecture documents, decision records, and infrastructure cost estimates."
+---
+
+The Architect Agent is the optional technical deep-dive inside the Define stage. Its system prompt describes it as "a system design and technical architecture specialist." From the PRD and your locked constraints it produces real architecture documents across eight sections: system overview, container architecture, database and API design, deployment and security architecture, design patterns, and technical risks.
+
+It records architecture decisions as ADRs and can estimate infrastructure cost, so the build that follows starts from decisions, not defaults. One boundary worth knowing: it designs the system; it does not write the app code. Implementation belongs to the [Fullstack Builder](/agents/fullstack-builder).
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `write_architecture_section` | Writes one of eight architecture sections, the main deliverable |
+| `record_architecture_decision` | Captures an ADR with context and consequences |
+| `estimate_infrastructure_cost` | Projects the running cost of the proposed architecture |
+| `load_constraints` | Reads locked tech-stack facts and project constraints |
+
+## What it reads and produces
+
+**Reads:** PRD sections; structured project constraints; locked tech-stack facts.
+
+**Produces:** eight architecture sections, from system overview to technical risks; architecture decision records; infrastructure cost estimates.
+
+## Where it sits in the pipeline
+
+The Architect Agent lives inside Stage 3, Define, alongside the [PRD Agent](/agents/prd), and it is optional: projects that do not need a formal architecture pass skip it entirely. When you do run it, the [Orchestrator](/agents/orchestrator) scaffolds the architecture outline with `setup_architecture_outline` and delegates sections the same way it does for the PRD. From there the pipeline continues into Stage 4 with the [Design Agent](/agents/design).
+
+## When to use it
+
+Skip it for simple products where the default stack is fine. Reach for it when the technical shape of the product is a real decision: multi-service systems, non-trivial data models, security or compliance requirements, or anything where you want infrastructure cost projected before you build.
+
+<Tip>
+Lock your constraints before invoking it. The agent's first move is `load_constraints`: it reads your locked tech-stack facts and project constraints and designs within them. If you have a required database, hosting target, or compliance boundary, get it into the project constraints first; stating it mid-conversation after the sections are written means revising decisions that are already recorded as ADRs.
+</Tip>

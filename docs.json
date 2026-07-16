@@ -1,0 +1,154 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ProductOS Docs",
+  "description": "The AI operating system for product development. Describe your idea once; a team of specialized AI agents researches, specs, designs, codes, and ships it.",
+  "colors": {
+    "primary": "#18181b",
+    "light": "#d4d4d8",
+    "dark": "#0f0f12"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://productos.dev"
+  },
+  "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "dark"
+  },
+  "navbar": {
+    "links": [
+      { "label": "Website", "href": "https://productos.dev" },
+      { "label": "Showcase", "href": "https://productos.dev/showcase" }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Try for free",
+      "href": "https://beta.productos.dev/sign-up?utm_source=docs"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "getting-started/what-is-productos",
+              "getting-started/quickstart",
+              "getting-started/core-concepts",
+              "getting-started/projects-and-stages",
+              "getting-started/plans-and-credits"
+            ]
+          },
+          {
+            "group": "Build surface",
+            "pages": [
+              "build/overview",
+              "build/ideation",
+              "build/research",
+              "build/prd",
+              "build/architecture",
+              "build/design-stage",
+              "build/develop-stage",
+              "build/qa",
+              "build/deploy"
+            ]
+          },
+          {
+            "group": "Code surface",
+            "pages": [
+              "code/overview",
+              "code/sandboxes",
+              "code/templates",
+              "code/github-sync",
+              "code/publish",
+              "code/mobile"
+            ]
+          },
+          {
+            "group": "Design surface",
+            "pages": [
+              "design/overview",
+              "design/brand-and-design-systems",
+              "design/templates"
+            ]
+          },
+          {
+            "group": "Platform",
+            "pages": [
+              "platform/code-ownership",
+              "platform/byok-and-models",
+              "platform/deployments-and-domains",
+              "platform/security-and-data"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Agents",
+        "groups": [
+          {
+            "group": "The AI product team",
+            "pages": ["agents/overview"]
+          },
+          {
+            "group": "Pipeline agents",
+            "pages": [
+              "agents/orchestrator",
+              "agents/ideation",
+              "agents/research",
+              "agents/prd",
+              "agents/architect",
+              "agents/design",
+              "agents/design-system",
+              "agents/fullstack-builder"
+            ]
+          },
+          {
+            "group": "On-demand agents",
+            "pages": ["agents/qa", "agents/deploy"]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/mcp",
+              "integrations/cursor",
+              "integrations/claude",
+              "integrations/github"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Resources",
+        "groups": [
+          {
+            "group": "Resources",
+            "pages": [
+              "resources/templates",
+              "resources/showcase",
+              "resources/faq",
+              "resources/glossary"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://twitter.com/productos_dev",
+      "linkedin": "https://linkedin.com/company/productos-dev",
+      "youtube": "https://youtube.com/@productosdotdev"
+    }
+  }
+}

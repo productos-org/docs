@@ -1,0 +1,57 @@
+---
+title: "QA"
+description: "How QA runs a real browser against your app, what it tests, how verdicts work, and how a fail chains into an automatic fix run."
+---
+
+QA is an on-demand action, not a pipeline stage. Run it whenever there is something worth verifying: after a build task, before a deploy, or any time the app feels off. Its job, in the agent's own words: "verify whether the user's app actually works."
+
+## Who runs it
+
+The [QA Agent](/agents/qa). It is not a linter or a static analyzer; it drives a real headless Chromium browser (via Browserbase/Steel with Stagehand) against your app's live preview URL, clicking, typing, and asserting like a user would, and it screenshots after every action so each finding comes with visual evidence.
+
+## What it tests
+
+Every run covers four areas:
+
+| Area | What happens |
+|------|--------------|
+| Critical user flows | The flows from your PRD, driven end to end in the real browser |
+| Per-route visual checks | Each route loaded and visually checked, with screenshots |
+| Backend API checks | The API surface exercised directly: routes listed, called, responses asserted |
+| Accessibility and errors | An axe accessibility audit plus console and network error sweeps |
+
+## What it reads
+
+- The live preview URL from your sandbox
+- The critical flows defined in your PRD
+- The app's route map
+
+Because the flows come from your PRD, QA tests the product you specified, not a generic checklist.
+
+## Verdicts
+
+Every run ends in a single verdict:
+
+- **Pass**: the app works
+- **Partial**: it works with problems worth fixing
+- **Fail**: something critical is broken
+
+The verdict comes with a report of severity-ranked findings, each backed by screenshots, plus suggested fixes.
+
+## Auto-fix chaining
+
+A fail does not have to land on your desk as a bug list. The findings can chain straight into an automated fix run: the [Fullstack Builder](/agents/fullstack-builder) receives a targeted fix task generated from the QA report (`delegate_to_develop_fix`), applies the fixes in the sandbox, and you can run QA again to confirm. The loop is test, fix, retest, without you triaging bug reports in between.
+
+## How you steer it
+
+- **Run it from the chat whenever you want.** QA is on demand; you do not have to wait for a stage boundary.
+- **Keep the PRD's critical flows honest.** They are what QA drives, so if a flow matters, make sure it is in the spec.
+- **Decide what a partial means for you.** Severity-ranked findings let you choose between chaining an auto-fix, cherry-picking what matters, or shipping anyway.
+
+<Tip>
+A QA pass immediately before deploying is cheap insurance: the [Deploy Agent](/agents/deploy) verifies that the build compiles, but QA is what verifies that the product behaves.
+</Tip>
+
+## What happens next
+
+When the verdict is good enough, ship it. Continue to [Deploy](/build/deploy).

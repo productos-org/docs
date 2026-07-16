@@ -1,0 +1,36 @@
+---
+title: "Fullstack Builder"
+description: "The implementation agent: a full coding agent running headless inside your project sandbox, writing the codebase your PRD specifies."
+---
+
+The Fullstack Builder is the implementation agent: a full coding agent running headless inside your project's live sandbox, editing files and running commands directly against a pre-installed Next.js project. In the Design stage it appears under the Frontend Engineer label; in Develop it builds the whole stack.
+
+It consumes the design system tokens and the PRD, so the code it writes implements the product you specified, screen for screen, on the tokens your Design System Agent locked. The system draws a hard boundary here: the Orchestrator is forbidden from writing code itself. As its prompt puts it, "Code belongs to the Develop sub-agent."
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| Full sandbox toolset | Reads, writes, and edits files and runs shell commands inside the project sandbox |
+| `delegate_to_develop_fix` | Receives targeted auto-fix runs generated from QA findings |
+| `dispatch_to_design_builder` | Runs live Next.js builds in the Design Builder tab during the Design stage |
+
+## What it reads and produces
+
+**Reads:** design system tokens and DESIGN.md; the PRD; a concrete build task.
+
+**Produces:** the application codebase in your sandbox; a live dev preview as it builds.
+
+## Where it sits in the pipeline
+
+The Fullstack Builder owns Stage 5, Develop, downstream of the [Design System Agent](/agents/design-system) whose tokens it builds on. It also makes a cameo in Stage 4, where it runs live builds as the Frontend Engineer. Once it has built, the on-demand [QA Agent](/agents/qa) verifies the result, and QA failures can chain straight back into this agent as a targeted auto-fix run through `delegate_to_develop_fix`.
+
+The code it writes is yours: generated code syncs to your own GitHub repo as it is written, with full export and no lock-in. See [code ownership](/platform/code-ownership).
+
+## Working with it
+
+The agent works from a concrete build task, not a vibe. The [Orchestrator](/agents/orchestrator) delegates tasks scoped against the PRD, and the design system tokens are already locked before it starts, so the biggest lever you have is the quality of the upstream artifacts.
+
+<Tip>
+Watch the live preview while it builds rather than waiting for the end. The sandbox serves a live dev preview as the agent works, and catching a wrong direction on the second screen is a one-line correction; catching it after the whole app is built is a rework request. For anything that already shipped, pair it with the [QA Agent](/agents/qa) and let the fail verdict trigger the auto-fix loop instead of describing bugs by hand.
+</Tip>

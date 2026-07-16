@@ -1,0 +1,38 @@
+---
+title: "Deploy Agent"
+description: "Owner of the publish pipeline: preflight build, GitHub push, Vercel deploy, and up to three self-fix iterations to a live URL."
+---
+
+The Deploy Agent takes the built project out of the sandbox and ships it. Its system prompt names the mandate: "Owner of the publish-and-deploy pipeline for a single project." It runs a preflight production build, pushes the code to GitHub, creates or reuses the Vercel project, syncs environment variables, and polls the deployment to completion.
+
+When a build breaks, it applies up to three targeted fix iterations before asking you, and it keeps a cumulative deploy ledger so every release is accounted for. The result is your product live on its own URL, with the code in a repo you own. Projects ship to `{slug}.product-os.app`, or to a custom domain.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `check_recent_deploy` | Mandatory first call: checks the current deployment state |
+| `preflight_build` | Runs the production build in-sandbox before anything ships |
+| `push_to_github_org` | Pushes the codebase to GitHub |
+| `trigger_vercel_deploy` / `poll_vercel_deployment` | Creates the Vercel deployment and follows it to completion |
+| `read_vercel_build_logs` | Diagnoses failed builds for targeted fixes |
+
+## What it reads and produces
+
+**Reads:** the built project in the sandbox; environment variables; the deployment target.
+
+**Produces:** a live production deployment on its own URL; a GitHub repo with your code; a cumulative deploy ledger.
+
+## Where it sits in the pipeline
+
+Deploy is an on-demand action, not a stage: you trigger it whenever you want to ship, and you can redeploy as often as you like. It is the last agent in the chain, downstream of the [Fullstack Builder](/agents/fullstack-builder) that wrote the code and, ideally, a passing run from the [QA Agent](/agents/qa). The [Orchestrator](/agents/orchestrator) can also poll live deployment state directly with `check_deploy_status`, so you can ask about a release without triggering a new one.
+
+The sequence is deliberately defensive. `check_recent_deploy` runs first so the agent never deploys blind over an in-flight or just-finished release, and `preflight_build` runs the production build inside the sandbox before anything is pushed, so most failures are caught and fixed before they ever reach Vercel.
+
+For domains and deployment details beyond the agent itself, see [deployments and domains](/platform/deployments-and-domains).
+
+## Working with it
+
+<Tip>
+Run the [QA Agent](/agents/qa) before you deploy. The Deploy Agent's self-fix loop is scoped to build failures: it reads the Vercel build logs and repairs what breaks compilation, up to three iterations. It does not judge whether your signup flow works. A QA pass first means the thing that goes live is verified end to end, not just buildable.
+</Tip>

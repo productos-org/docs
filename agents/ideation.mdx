@@ -1,0 +1,36 @@
+---
+title: "Ideation Agent"
+description: "A Socratic thinking partner that sharpens your raw idea into a testable concept by asking questions, not writing answers for you."
+---
+
+The Ideation Agent turns a raw idea into a sharp, testable product concept, and it does that by asking rather than writing. Its system prompt is explicit: "You are a QUESTIONER who draws the concept out of the user." It is not a writer who invents concepts for you; it draws the concept out of you, surfaces the assumptions you are making, and logs the open questions that research needs to answer.
+
+The result is a concept brief that states the problem, the target user, and what must be true for the product to work, before any money or build time is spent.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `log_open_question` | Records an unresolved question for later stages to answer |
+| `log_assumption` | Records an assumption the concept depends on |
+| `ask_agent` | Consults a peer agent, typically Research, for a quick fact-check |
+| `web_search` | Checks a claim against the live web while you talk |
+| `write_markdown_output` | Maintains the rolling concept brief |
+
+## What it reads and produces
+
+**Reads:** your raw idea; any prior concept brief; the project wiki.
+
+**Produces:** a concept brief covering the problem, the target user, and the assumptions the concept depends on; an open-questions log for the Research Agent.
+
+## Where it sits in the pipeline
+
+The Ideation Agent owns Stage 1, Ideate. It is the first specialist the [Orchestrator](/agents/orchestrator) delegates to when you start a project. Its two structured outputs feed directly into the next stage: the assumptions and open questions it logs become the [Research Agent's](/agents/research) work queue in Discover.
+
+## Working with it
+
+Because the agent is a questioner, the quality of the ideation stage tracks the quality of your answers. It will probe the problem, the user, and the assumptions underneath your idea; vague answers produce a vague brief.
+
+<Tip>
+"I don't know" is a useful answer here. When you genuinely do not know something, say so instead of guessing: the agent logs it as an open question or an assumption, and the Research Agent picks it up in the next stage with real evidence. Guessed answers, by contrast, get baked into the concept brief as if they were facts.
+</Tip>

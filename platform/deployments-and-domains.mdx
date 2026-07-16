@@ -1,0 +1,56 @@
+---
+title: "Deployments and domains"
+description: "How ProductOS ships your app: sandbox previews while you build, then a self-checking deploy to a live URL or your own custom domain."
+---
+
+Your app is visible from the first file written and shippable whenever you decide it is ready. Two mechanisms make that work: sandbox previews during development, and the Deploy Agent when you want to go live.
+
+## Live previews while you build
+
+Every project runs in an isolated cloud sandbox with a live preview URL. As agents write files, install dependencies, and run builds, the preview updates, so you review real behavior rather than descriptions of it. Previews are for development; they are not your production URL.
+
+## Deploying
+
+Deploy is an on-demand action, not a pipeline stage: trigger it whenever you want, as often as you want. When you do, the Deploy Agent runs a sequence designed to ship a working app, not just push files:
+
+<Steps>
+  <Step title="Check recent deploys">
+    The agent first checks whether a recent deploy already covers the current state, avoiding redundant work.
+  </Step>
+  <Step title="Preflight build">
+    It builds the project before anything ships. Problems surface here, not in production.
+  </Step>
+  <Step title="Push to GitHub">
+    The code is pushed to your own GitHub repository, so every deploy corresponds to a commit you can inspect. See [Code ownership](/platform/code-ownership).
+  </Step>
+  <Step title="Deploy to Vercel">
+    The app deploys to Vercel and comes up at its live URL.
+  </Step>
+</Steps>
+
+If the build or deploy fails, the agent does not just report the error: it attempts to fix the problem itself, with up to 3 self-fix iterations before it hands the issue back to you.
+
+<Tip>
+  Run [QA](/build/qa) before deploying. The QA Agent tests your app in a real headless browser and returns a pass, partial, or fail verdict, and a fail can chain into an auto-fix run.
+</Tip>
+
+## Domains
+
+Deployed apps ship to one of two places:
+
+| Option | URL | Availability |
+|--------|-----|--------------|
+| Platform subdomain | `{slug}.product-os.app` | All plans |
+| Custom domain | Your own domain, no watermark | Pro and above |
+
+The platform subdomain is the default: every deployed project gets a `{slug}.product-os.app` address with no setup. On Pro and above you can attach your own custom domain, and the watermark is removed. See [Plans and credits](/getting-started/plans-and-credits) for plan details.
+
+## Where this runs
+
+All ProductOS deployments target Vercel, and your code always flows through your own GitHub repo on the way there. That means no proprietary hosting layer: if you later want to deploy the same repo yourself, through your own Vercel account or any other host, nothing stands in the way.
+
+## Related pages
+
+- [Deploy Agent](/agents/deploy): the agent behind the deploy action
+- [Sandboxes](/code/sandboxes): how the development environment works
+- [Security and data](/platform/security-and-data): isolation and data handling

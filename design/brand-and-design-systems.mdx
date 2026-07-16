@@ -1,0 +1,45 @@
+---
+title: "Brand and design systems"
+description: "Create a design system from a prompt, your brand assets, or an existing website: tokens, a DESIGN.md spec, and dark and light HTML previews."
+---
+
+A design system on ProductOS is a complete, machine-readable definition of how your product should look. Agents consume it when they generate UI, so the look you define here carries through everything you build.
+
+## What a design system contains
+
+- **Color tokens**: a full semantic palette (primary, secondary, accent, background, foreground, muted, card, border, destructive, and more), each with its foreground pairing.
+- **Typography**: sans and mono font families, a size scale, font weights, and line heights.
+- **Spacing, radius, and shadows**: a spacing scale, border radius steps, and a shadow scale.
+- **Atmosphere**: the personality layer, including the overall vibe (minimal, bold, playful, corporate, dark, or your own), section padding, card style, and animation style (subtle, energetic, or none).
+- **DESIGN.md**: a written specification of the whole system that agents read when building UI.
+- **Dark and light previews**: two self-contained HTML preview pages, one per theme, so you can judge the system as rendered UI rather than as a list of hex codes.
+
+## Creating a design system from a prompt
+
+<Steps>
+  <Step title="Name it">
+    Give it a name, for example "Neon Fintech" or "Brutalist Portfolio".
+  </Step>
+  <Step title="Describe it">
+    Write a short description of the look you want. Include colors, mood, industry, typography style, or reference brands for best results, for example: "A premium fintech design system with deep navy backgrounds, gold accents, sharp typography."
+  </Step>
+  <Step title="Generation runs">
+    ProductOS generates the DESIGN.md first, then the tokens, then a dark-mode HTML preview, then converts it into the light-mode version.
+  </Step>
+  <Step title="Refine">
+    After the first generation you stay in a refine flow, so you can keep iterating on the same system in follow-up prompts.
+  </Step>
+</Steps>
+
+You can mark one design system as your default. Each system renders as a card whose preview reflects the actual system: its real colors and whether it is a dark or light theme.
+
+## Bringing your own brand
+
+Two ways to ground a design system in a brand that already exists:
+
+- **Upload brand assets**: attach logos, hero images, product shots, and icons; each asset is labeled with its role so generation uses it correctly. You can also upload a PDF (for example, existing brand guidelines); its text is extracted and fed to the generator along with the document itself.
+- **Import from a URL**: point at an existing website. ProductOS scrapes the site, extracts its color tokens, and generates a DESIGN.md and design system from what it finds. If a site blocks scraping or times out, you get a clear error rather than a half-imported system.
+
+## Where design systems are used
+
+Design systems apply to projects across the Design and Code surfaces, so generated UI lands already on-brand. On the Build surface, the [Design System Agent](/agents/design-system) produces the same artifacts (tokens, DESIGN.md, dark and light previews) as a stage of the full pipeline; the format is shared.

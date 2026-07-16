@@ -1,0 +1,48 @@
+---
+title: "Claude"
+description: "Connect Claude to your ProductOS project over MCP so it plans, specs, and pressure-tests decisions against your real product context."
+---
+
+The ProductOS Claude integration connects Claude to your project over [MCP](/integrations/mcp), so Claude reasons over the real product context: no copy-paste, no re-explaining the product every session, no drift.
+
+## What Claude sees
+
+- **The PRD.** Claude reads the live requirements: scope, user stories, and acceptance criteria, so its plans and answers are grounded in what you are actually building.
+- **The research.** Market and user findings are part of the context, so Claude reasons with the evidence behind the product instead of generic assumptions.
+- **The design.** Flows and UI decisions are visible to Claude, keeping its suggestions consistent with the intended experience.
+
+## Why connect Claude
+
+Teams reach for Claude to plan, spec, and reason through hard product decisions. The missing piece has always been context:
+
+- **No copy-paste.** No more pasting the PRD into a chat and re-explaining the product every session. The MCP connection lets Claude read the live context straight from ProductOS.
+- **Grounded reasoning.** When Claude can see the requirements and the research, its output stops drifting. You get analysis and drafts that hold up against the actual product definition.
+- **Results flow back.** MCP is bidirectional, so updates Claude makes are written back into the shared context where the rest of the pipeline can use them.
+
+## Connect in three steps
+
+<Steps>
+  <Step title="Open your ProductOS project">
+    Choose the project you want Claude to reason over and open its integration settings to reveal the MCP connection.
+  </Step>
+  <Step title="Add the MCP server to Claude">
+    Connect the ProductOS MCP endpoint in Claude's connector settings and authorize it. Claude can now read your project as a live context source.
+  </Step>
+  <Step title="Reason over live context">
+    Ask Claude to refine the spec, pressure-test a flow, or draft the next iteration.
+  </Step>
+</Steps>
+
+## What connected Claude is good at
+
+- **Refine the spec in place.** Ask Claude to sharpen user stories or acceptance criteria and it edits against the real PRD, not a copy.
+- **Pressure-test decisions.** Have Claude challenge a product choice using the research that is already in your project context.
+- **Plan the next iteration.** Draft the roadmap for what comes next with Claude reasoning over where the product actually stands today.
+
+## Claude vs Cursor: which one?
+
+Both integrations expose the same project context over the same protocol. The difference is where you work: Cursor is the editor, where the connected context steers code generation; Claude is where you plan, spec, and reason before and between builds. Many teams use both, and because they read one shared context, nothing diverges between them. See the [Cursor integration](/integrations/cursor).
+
+<Note>
+Whatever you produce with Claude connected remains yours. The code side of the pipeline syncs to your own repository through the [GitHub integration](/integrations/github).
+</Note>

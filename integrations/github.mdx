@@ -1,0 +1,50 @@
+---
+title: "GitHub"
+description: "Sync the full generated codebase to your own GitHub repository as real commits, review real diffs, and deploy from the branch you control."
+---
+
+The GitHub integration is the exit of the ProductOS pipeline. Research, PRD, and design produce the shared context; the coding agents turn it into a real codebase; GitHub sync puts that codebase in your hands. Generated code syncs to your own repository as it is written, so ownership is the default state, not an export feature.
+
+## What you get
+
+- **Full code sync.** The complete generated codebase lands in your GitHub repository. Not a snippet or a sandbox, but the real project, structured the way an engineer would expect.
+- **Real diffs to review.** Every change ProductOS makes shows up as a commit you can read, review, and revert. Your team reviews product changes the same way they review any code.
+- **Export anytime.** There is no export wall. Pull the codebase down whenever you want and keep it forever, whether or not you keep using ProductOS.
+
+## Why it works this way
+
+- **No lock-in by design.** Many AI app builders trap the output behind their platform. ProductOS does the opposite: the code lives in your repo from the start, so leaving is never a migration project.
+- **Own every line.** You hold the repository, the history, and the right to take the code anywhere. See [Code ownership](/platform/code-ownership).
+- **Fits your engineering workflow.** Because it is just Git, the code drops into the branching, review, and CI conventions your team already runs. There is no proprietary workflow to learn.
+
+## Connect in three steps
+
+<Steps>
+  <Step title="Connect your GitHub account">
+    Authorize ProductOS from your project's integration settings and choose the account or organization that will own the repository.
+  </Step>
+  <Step title="Pick or create a repo">
+    Sync into an existing repository or let ProductOS create a fresh one. The full codebase is pushed to the branch you choose.
+  </Step>
+  <Step title="Review, deploy, own it">
+    Review the diffs, merge, and deploy straight from GitHub to your own hosting. Every subsequent change syncs back as normal commits.
+  </Step>
+</Steps>
+
+## What the repo unlocks
+
+- **Deploy from GitHub.** Wire the repo to your host of choice and ship from the branch you control, with previews on every push. The [Deploy Agent](/agents/deploy) also pushes to GitHub as part of its own deploy flow.
+- **Bring engineers into the loop.** Hand the repo to your team so they can review, extend, and harden the generated code with the tools they already use.
+- **Keep an auditable history.** Every change is a commit, so you always have a full record of how the product evolved.
+
+<AccordionGroup>
+  <Accordion title="Do I actually own the code?">
+    Yes. The repository, its history, and the code inside it are yours. You can keep the codebase, take it to another host, or continue developing it independently whether or not you keep using ProductOS.
+  </Accordion>
+  <Accordion title="Can I deploy directly from GitHub?">
+    Yes. Because the full codebase lives in your GitHub repo, you can connect it to your hosting provider and deploy from the branch you control. Further changes from ProductOS arrive as normal commits.
+  </Accordion>
+  <Accordion title="Does connecting GitHub cost extra?">
+    No. GitHub sync is part of the core ProductOS workflow, and you can start on the free tier.
+  </Accordion>
+</AccordionGroup>

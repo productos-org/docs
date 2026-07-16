@@ -1,0 +1,59 @@
+---
+title: "Deploy"
+description: "How publishing works: preflight build, GitHub push, Vercel deployment, self-fixing broken builds, the deploy ledger, and custom domains."
+---
+
+Deploy is an on-demand action: whenever the project is ready, it takes the built app out of the sandbox and ships it to a live production URL, with the code in a GitHub repo you own.
+
+## Who runs it
+
+The [Deploy Agent](/agents/deploy), the owner of the publish-and-deploy pipeline for your project. Its mandatory first move is `check_recent_deploy`: it checks the current deployment state before doing anything, so repeat requests do not stack duplicate deploys.
+
+## The pipeline
+
+<Steps>
+  <Step title="Check current state">
+    The agent looks at the most recent deployment first. If a deploy is already live or in flight, it works from that state.
+  </Step>
+  <Step title="Preflight build">
+    A production build runs inside the sandbox before anything ships. Broken builds are caught here, not on the hosting platform.
+  </Step>
+  <Step title="Push to GitHub">
+    The codebase is pushed to GitHub. This is the same repo your code has been syncing to as it was written; the deploy just makes it current.
+  </Step>
+  <Step title="Deploy to Vercel">
+    The agent creates or reuses the Vercel project, syncs environment variables, triggers the deployment, and polls it to completion.
+  </Step>
+</Steps>
+
+## Self-fixing broken builds
+
+When a build breaks, the agent does not just report the failure. It reads the Vercel build logs, diagnoses the error, and applies up to three targeted fix iterations before asking you for help. Most build breakages never reach you.
+
+## The deploy ledger
+
+Every release is accounted for. The agent keeps a cumulative deploy ledger for the project, so you can see what shipped and when, across every deploy, not just the latest one.
+
+## URLs and custom domains
+
+Your product ships to its own URL at `{slug}.product-os.app`. You can also point a custom domain at the deployment; see [Deployments and domains](/platform/deployments-and-domains) for the platform-level details.
+
+## What it reads
+
+- The built project in your sandbox
+- The project's environment variables
+- The deployment target
+
+## How you steer it
+
+- **Ask for a deploy from the chat when you are ready.** Deploy is on demand; there is no stage gate to pass first.
+- **Run [QA](/build/qa) first.** The preflight build proves the app compiles; a QA pass proves it behaves. Together they make a deploy boring, which is the goal.
+- **Let the fix iterations run.** If the build fails, the agent gets three targeted attempts with the real build logs before it comes back to you; when it does ask, it has already narrowed the problem.
+
+<Note>
+There is no lock-in at the finish line: the deployed code lives in your GitHub repo, and the full project remains exportable. What ships is yours.
+</Note>
+
+## After the deploy
+
+The app is live. From here you can keep iterating in [Develop](/build/develop-stage), retest with [QA](/build/qa), and deploy again; the ledger keeps the history, and `check_recent_deploy` keeps repeat ships clean.

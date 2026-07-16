@@ -1,0 +1,52 @@
+---
+title: "Cursor"
+description: "Connect ProductOS to Cursor over MCP so the editor writes code against your real PRD, research, and design instead of a pasted snippet."
+---
+
+The ProductOS Cursor integration exposes your project over [MCP](/integrations/mcp) so Cursor can read everything the pipeline already knows. Ask Cursor to build a feature and it reasons over your real PRD, research, and design, with the results written back where the rest of the pipeline can use them.
+
+## What Cursor sees
+
+Three parts of your project context come with the connection:
+
+- **The PRD.** Cursor reads the live product requirements: scope, user stories, and acceptance criteria, so generated code answers to the spec instead of guessing.
+- **The research.** Market findings and user insights come along, so implementation decisions carry the reasoning behind the product.
+- **The design.** Flows and UI decisions are visible to the editor, keeping the code you write aligned with the intended experience.
+
+## Why connect Cursor
+
+PMs and technical founders increasingly live in Cursor. The problem is not the editor; it is that the editor does not know what you are actually building. The MCP connection closes that gap:
+
+- **No copy-paste.** Stop pasting your PRD into the chat pane and hoping it sticks. Cursor pulls the live context directly from your ProductOS project.
+- **Spec-true generation.** When the assistant can see the requirements, its suggestions stop drifting. You get code that matches the product you defined, not a plausible-looking tangent.
+- **Always current.** Because the context is live, changes to the product definition surface in the editor instead of going stale.
+
+## Connect in three steps
+
+<Steps>
+  <Step title="Open your ProductOS project">
+    Pick the project whose context you want in the editor and open its integration settings to reveal the MCP connection.
+  </Step>
+  <Step title="Add the MCP server to Cursor">
+    Add the ProductOS MCP endpoint to Cursor's MCP configuration and authorize it. The editor now sees your project as a context source.
+  </Step>
+  <Step title="Code against live context">
+    Ask Cursor to build a feature and it reasons over your real PRD, research, and design.
+  </Step>
+</Steps>
+
+## What context in the editor unlocks
+
+- **Implement to the spec.** Point Cursor at a user story and let it build the feature against the acceptance criteria already in your PRD.
+- **Answer product questions in context.** Ask why a flow works the way it does and get an answer grounded in the research, not the model's imagination.
+- **Keep code and product in sync.** The live connection means the editor and the product definition never diverge silently.
+
+<Tip>
+You do not have to be technical to use this integration. It brings the PRD, research, and design into the editor, so a product manager can direct Cursor with the same source of truth an engineer uses: you describe what you want, and Cursor builds against the spec.
+</Tip>
+
+## Ownership is unchanged
+
+The integration is about context, not lock-in. Whatever Cursor produces is your code. You can sync the full codebase to your own GitHub repo through the [GitHub integration](/integrations/github) and deploy it anywhere.
+
+Prefer to reason and plan before you code? The same context flows into the [Claude integration](/integrations/claude).

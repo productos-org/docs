@@ -1,0 +1,42 @@
+---
+title: "GitHub sync"
+description: "Your generated code lives in Git from the first turn. Connect your own GitHub account to push, pull, and import repositories. No lock-in."
+---
+
+Code you build on the Code surface is never trapped in the platform. Generated code is pushed to a Git repository as it is written, turn by turn, and you can sync everything to a repository you own at any time.
+
+## Two repositories, one project
+
+Every project involves up to two GitHub locations, and it helps to know which is which:
+
+- **The platform-hosted repository**: every project gets one automatically. This is the canonical store for your project's files; the agent pushes to it on every turn. You will see it as a repository chip on the project. It exists whether or not you have connected a GitHub account.
+- **Your personal GitHub**: your own account, connected under Settings, then Connections. This is what you use to export code to a repository you own, pull from your existing repositories, or import a project.
+
+<Note>
+A project always having a platform repository while Connections shows "not connected" is normal: the platform repo is automatic, the personal connection is opt-in.
+</Note>
+
+## Push to your own repository
+
+With your personal GitHub connected, use Push to GitHub from the project. You can either:
+
+- **Create a new repo**: give it a name and the project's code is pushed to a fresh repository under your account.
+- **Push to an existing repo**: point at a repository you already own.
+
+## Pull from GitHub
+
+Pull from GitHub brings changes from a repository into your project's sandbox. Pick the repository and optionally a branch; the dialog reports how many files were pulled. This is also how mobile projects hot-reload agent fixes into the live preview. See [Mobile](/code/mobile).
+
+## Import an existing project
+
+You can start a Code project from an existing repository with Import from GitHub. Browse your personal repositories and organizations (with search and branch selection), or paste a repository URL directly. The imported code lands in a fresh sandbox with a live preview, and from there it behaves like any other project.
+
+## Save and restore
+
+The project toolbar has a Save button that commits your current state with a real commit message. Restore lets you roll the project back to any previously saved commit. Because Git is the canonical store, restoring is a first-class operation, not a best-effort undo.
+
+## No lock-in
+
+- Code syncs out continuously; there is no separate "export" step to unlock it.
+- You can disconnect your personal GitHub at any time from Settings, then Connections.
+- Full export of every project is always available. See [Code ownership](/platform/code-ownership).

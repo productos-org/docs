@@ -1,0 +1,65 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about ProductOS: how it differs from code-first builders, code ownership, mobile apps, pricing, and integrations."
+---
+
+## The platform
+
+<AccordionGroup>
+  <Accordion title="What is ProductOS?">
+    ProductOS is an AI product-building platform. You describe your idea once, and a pipeline of agents takes it from research to PRD to design to production code, web and mobile, with every stage sharing the same project context. See [What is ProductOS](/getting-started/what-is-productos).
+  </Accordion>
+  <Accordion title="How is it different from Lovable, Bolt.new, or v0?">
+    Those tools start at code. ProductOS starts at the product: research and a real PRD come first, the design is generated from that spec, and the code is built from both. You also keep full code ownership, with GitHub sync and export from day one and no export wall.
+  </Accordion>
+  <Accordion title="Does it build mobile apps too?">
+    Yes. Native iOS and Android via Expo, from the same prompt and context as your web app, including store deployment. See [Mobile](/code/mobile).
+  </Accordion>
+  <Accordion title="Is it free?">
+    Yes. Start free with no credit card. One account and one credit pool are shared across every surface: Design, Code, and Build. See [Plans and credits](/getting-started/plans-and-credits).
+  </Accordion>
+</AccordionGroup>
+
+## Code ownership
+
+<AccordionGroup>
+  <Accordion title="Do I own the code?">
+    Yes. Generated code syncs to your own GitHub repository as it is written. You can export the full codebase and deploy on your own infrastructure with your own domains. See [Code ownership](/platform/code-ownership).
+  </Accordion>
+  <Accordion title="Does connecting GitHub lock me into ProductOS?">
+    No, the opposite. GitHub sync exists so you own the code: the full codebase lands in your own repository, you can export it at any time, and you deploy it wherever you like. Integrations reduce lock-in rather than add to it.
+  </Accordion>
+  <Accordion title="Can I deploy directly from GitHub?">
+    Yes. Because the full codebase lives in your repo, you can connect it to your hosting provider and deploy from the branch you control. Further changes from ProductOS arrive as normal commits. See the [GitHub integration](/integrations/github).
+  </Accordion>
+</AccordionGroup>
+
+## Integrations
+
+<AccordionGroup>
+  <Accordion title="What integrations does ProductOS support?">
+    ProductOS integrates with Cursor and Claude over the Model Context Protocol (MCP) and syncs your full generated codebase to GitHub. Vercel, Figma, and Slack integrations are on the roadmap. See the [integrations overview](/integrations/overview).
+  </Accordion>
+  <Accordion title="What is MCP and why does ProductOS use it?">
+    MCP is an open standard that lets AI clients like Cursor and Claude read from and write to external context sources. ProductOS exposes your project over MCP so those tools work against your real PRD, research, and designs instead of a pasted snippet. See [MCP](/integrations/mcp).
+  </Accordion>
+  <Accordion title="Do I need a paid plan to use integrations?">
+    No. The MCP connection to Cursor and Claude and the GitHub code sync are part of the core ProductOS workflow, and you can start free.
+  </Accordion>
+  <Accordion title="Do I have to be technical to use the Cursor integration?">
+    No. The integration brings the PRD, research, and design into the editor, so a product manager can direct Cursor with the same source of truth an engineer uses. You describe what you want; Cursor builds against the spec.
+  </Accordion>
+</AccordionGroup>
+
+## Models and keys
+
+<AccordionGroup>
+  <Accordion title="Can I use my own API keys?">
+    Yes. You can plug in your own Anthropic, OpenAI, or Google keys, or an OpenRouter gateway key, instead of platform credits. See [BYOK and models](/platform/byok-and-models).
+  </Accordion>
+  <Accordion title="Which model does each agent use?">
+    Model choice per agent is configurable; no model is hardcoded into the pipeline.
+  </Accordion>
+</AccordionGroup>
+
+Something not covered here? The [glossary](/resources/glossary) defines the terms, and each surface's overview page ([Build](/build/overview), [Code](/code/overview), [Design](/design/overview)) covers its own workflow in depth.

@@ -1,0 +1,46 @@
+---
+title: "Design"
+description: "How the Design stage sets up your brand, maps user flows, specs every screen, and locks a production-ready design system."
+---
+
+Design is the fourth stage of the Build pipeline. It turns the approved spec into the visual product: a brand direction, user flows, UI screen specifications, and a design system that every downstream build agent works from. Because it designs from your actual PRD, the screens are for the product you defined, not a generic template.
+
+## What the stage produces
+
+- A locked brand direction: palette, font pairing, vibe report, and a mood board of visual references
+- User-flow diagrams
+- UI screen specifications for the product's screens
+- The design system: canonical design tokens, a component system, and `DESIGN.md`, the brief every build agent reads
+- Real dark and light HTML previews of the design system, rendered before any product code exists
+
+## Who runs it
+
+Three agents share the stage:
+
+- **The [Orchestrator](/agents/orchestrator)** runs brand setup in automatic mode, generating the brand palette, font pairing, and vibe report for the project.
+- **The [Design Agent](/agents/design)** reads everything the earlier stages produced, the concept, the research, and the PRD, and turns it into user flows and screen specifications. It keeps your workspace in sync as it works, switching the active design tab as it moves through brand, flows, and screens.
+- **The [Design System Agent](/agents/design-system)** is a senior visual designer benchmarked against Linear, Vercel, Stripe, Notion, and Apple's Human Interface Guidelines. From the locked brand it builds the design tokens, the component system, and `DESIGN.md`, then renders dark and light previews so you can judge the system before a line of product code exists. Its own brief for taste: "Restraint over flourish. Personality you can name."
+
+The [Fullstack Builder](/agents/fullstack-builder) also appears in this stage under the Frontend Engineer label, running live Next.js builds in the Design Builder tab.
+
+## What it reads
+
+- The concept and research from earlier stages
+- The PRD, including its personality notes
+- The locked brand guidelines, any assets you upload, and the mood board
+
+## How you steer it
+
+- **Weigh in on the brand before the system is built.** The brand direction is the input everything else derives from; uploaded assets and mood-board feedback shape it directly.
+- **Review the flows before the screens.** Flow diagrams are cheaper to change than a full set of screen specs.
+- **Judge the previews.** The dark and light HTML previews exist precisely so you can react to the real system, spacing, type, and components, not a description of it. The brief can be edited surgically, so a correction does not mean starting over.
+
+<Note>
+The design system's tokens are the source for every downstream build agent. This is why shipped ProductOS products look designed rather than generated: the Develop stage implements your screens on your tokens, not on defaults.
+</Note>
+
+## What happens next
+
+With flows, screen specs, and `DESIGN.md` locked, the Orchestrator proposes the transition to Develop. The [Fullstack Builder](/agents/fullstack-builder) consumes the design tokens and the PRD and writes the actual codebase, screen for screen.
+
+Continue to [Develop](/build/develop-stage).

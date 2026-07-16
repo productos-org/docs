@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- ProductOS Origami Favicon with white background -->
+  <rect width="36" height="36" fill="white"/>
+  <!-- Back triangle (light gray - visible at bottom right) -->
+  <path d="M4 32 L18 4 L32 32 Z" fill="#BBBBBB"/>
+  <!-- Left fold (dark gray) -->
+  <path d="M18 4 L4 32 L18 32 Z" fill="#555555"/>
+  <!-- Right fold going up (black - dominant) -->
+  <path d="M18 4 L18 32 L32 4 Z" fill="#1A1A1A"/>
+</svg>

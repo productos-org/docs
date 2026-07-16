@@ -1,0 +1,49 @@
+---
+title: "BYOK and models"
+description: "Bring your own Anthropic, OpenAI, Google, or OpenRouter key and run credit-free, and choose which model each agent uses."
+---
+
+ProductOS is multi-provider by design. No model is hardcoded anywhere in the platform: every agent resolves its model from configuration, and you can override that configuration per agent. You can also bring your own API keys and run on them instead of platform credits.
+
+## Bring your own key (BYOK)
+
+Instead of consuming platform credits, you can plug in your own provider keys:
+
+- **Anthropic**, **OpenAI**, or **Google** keys for direct access to that provider's models
+- An **OpenRouter** gateway key, which can route any model through your OpenRouter account
+
+Add keys under **Settings → Providers**. Runs that use your key skip credit deduction entirely; token usage is still logged so your usage history stays complete.
+
+<Note>
+  BYOK keys are stored AES-256-GCM encrypted in the shared account database and work across all surfaces. The raw key is never returned to the client after you save it; only the last four characters are shown.
+</Note>
+
+## How requests are routed
+
+When an agent makes a model call, ProductOS picks the route in a fixed order of precedence:
+
+1. **Native key.** If you have a key for the model's own provider (for example, an Anthropic key and a Claude model), the call goes directly to that provider on your key, credit-free.
+2. **Gateway key.** If you have an OpenRouter gateway key, any model can route through your gateway, credit-free.
+3. **Platform default.** With no matching key, the call runs on platform infrastructure and is metered in credits.
+
+You do not manage this routing manually; connecting a key is enough for eligible calls to use it.
+
+## Per-agent model selection
+
+Each agent has a default model configured by platform admins, chosen to suit its work: research, long-form writing, and code generation have different demands, and the defaults reflect that. Under the hood the platform routes across multiple providers, including Anthropic, OpenAI, Google, xAI, and Perplexity models.
+
+You can override the model for any individual agent in **Settings → Per-Agent Model Overrides**. The picker is a searchable combobox grouped by provider:
+
+- A **ProductOS** group with the platform's model catalog
+- One group per **connected provider**, populated live from that provider's own model list using your key
+
+Resolution order is simple: your per-agent override wins, otherwise the admin-configured default applies. Picking a model from a connected provider's group routes that agent through your key, credit-free.
+
+<Tip>
+  A practical setup: connect one provider key for the models you care most about (for example, your coding agent), and let everything else run on platform defaults. You only override what you want to control.
+</Tip>
+
+## Related pages
+
+- [Plans and credits](/getting-started/plans-and-credits): how metered usage is billed
+- [Security and data](/platform/security-and-data): how keys and data are protected

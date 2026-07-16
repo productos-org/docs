@@ -1,0 +1,36 @@
+---
+title: "Orchestrator"
+description: "The agent you actually talk to. It runs the full idea-to-deploy pipeline and routes every task to the right specialist agent."
+---
+
+The Orchestrator runs the whole pipeline and routes work to every specialist. It is the agent you actually talk to: it moves your project stage by stage while keeping a clean project wiki, and it never does the domain work itself. Its own system prompt puts it bluntly: "Ideation, research, PRDs, design, code: delegate."
+
+Every research question, PRD section, design decision, and line of code is routed to the right specialist. The Orchestrator is the only path between stages and the connective tissue of the whole system: it scaffolds outlines before delegating sections, proposes stage transitions for your approval, runs brand setup in automatic mode, and reads memory across every agent so nothing agreed in one stage gets forgotten in the next.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `delegate_to_*` | Hands a task to any specialist: ideation, research, PRD, architect, design, design system, QA, deploy, or the fullstack builder |
+| `setup_prd_outline` / `setup_architecture_outline` | Scaffolds document outlines before per-section delegation |
+| `get_stage` / `set_stage` / `propose_stage_transition` | Reads and advances the project through the pipeline |
+| `check_deploy_status` | Polls Vercel directly for live deployment state |
+| `generate_brand_palette` / `generate_font_pairing` / `generate_vibe_report` | Runs automatic brand setup for the project |
+| `exa_search` / `scrape_url` / `crawl_site` / `gemini_search` | Web research, page extraction, and grounded search |
+| `ask_user` | Asks you a bounded question when a decision genuinely needs a human |
+
+## What it reads and produces
+
+**Reads:** your idea, requests, and attachments; the full project wiki; cross-stage memory from every agent.
+
+**Produces:** stage transitions across the pipeline; a rolling progress ledger; a clean, current project wiki.
+
+## Where it sits in the pipeline
+
+The Orchestrator is not a stage; it spans all of them. It is active from your first message in Ideate through the moment the [Deploy Agent](/agents/deploy) ships your product, and it is the only agent that talks to you at any point. The first specialist it typically delegates to is the [Ideation Agent](/agents/ideation).
+
+Stage transitions are never silent. When the Orchestrator believes a stage is done, it proposes the transition and waits for your approval before moving on.
+
+<Tip>
+Talk to the Orchestrator in terms of outcomes, not agents. You do not need to name a specialist; say what you want ("compare the top three competitors' pricing", "add a settings page") and the Orchestrator routes it. If you do want a specific agent involved, asking for it works too: delegation is its entire job.
+</Tip>

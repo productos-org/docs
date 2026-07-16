@@ -1,0 +1,58 @@
+---
+title: "Research (Discover)"
+description: "How the Discover stage investigates competitors, market size, and user validation, grounding every claim in a source you can click."
+---
+
+Discover is the second stage of the Build pipeline. It replaces assumptions with evidence: structured, multi-source investigation across competitors, market size, user validation, and regulation, with every claim grounded in a clickable source.
+
+## What the stage produces
+
+- **Findings, sources, and competitors** logged as separate, auditable records, so every claim can be traced back to where it came from
+- **Per-topic research documents**, the primary deliverable of each research run
+- **A rolling research brief** that synthesizes the runs
+- **Surveys**, when the evidence you need does not exist yet: the agent drafts a validation survey with a share URL, then analyzes the responses
+
+## Who runs it
+
+The [Research Agent](/agents/research) is an investigator, not a summarizer. From its system prompt: "You are an INVESTIGATOR grounding every claim in a source the user can click." No hand-waved market numbers.
+
+## Sources
+
+The agent works across several kinds of evidence:
+
+| Source | What it provides |
+|--------|------------------|
+| Exa web search (`exa_search` / `exa_fetch`) | Semantic web search with full-text extraction, from fast to deep |
+| Reddit | Community discussions and sentiment |
+| G2 and Trustpilot reviews | What users say about competing products |
+| App stores | iOS and Play review signals |
+| GitHub | Open-source landscape and developer signals |
+| Surveys | Fresh validation data when no source has the answer |
+
+Under the hood, the research system cross-validates findings across sources: results that multiple independent sources confirm are treated as stronger signals than single-source claims.
+
+## Customer signals
+
+Your own customers count as primary evidence. The agent can pull real workspace signals, calls, tickets, and reviews, into the analysis alongside external research, so validation is not limited to what strangers on the internet say.
+
+## What it reads
+
+- The concept brief and open-questions log from [Ideation](/build/ideation)
+- The specific research task the Orchestrator delegates
+- Workspace customer signals, when available
+
+## How you steer it
+
+- **Delegate specific questions from the chat.** The open questions logged in Ideation are the natural backlog; you can also ask for a targeted run on anything ("who are the top three competitors and how do they price?").
+- **Ask for depth where it matters.** A pricing landscape and a regulatory review are different jobs; scope each run to one topic and the per-topic documents stay useful.
+- **Use surveys for the gaps.** When no source can answer a question about your users, ask for a survey; you get a share URL, and the responses feed back into the analysis.
+
+<Note>
+Because findings, sources, and competitors are logged as individual records rather than buried in prose, you can audit any claim later, including from the PRD stage, where every requirement must trace back to evidence.
+</Note>
+
+## What happens next
+
+When the open questions have sourced answers, the Orchestrator proposes the transition to Define. The [PRD Agent](/agents/prd) writes the requirements document directly against the research synthesis, so the spec inherits the evidence.
+
+Continue to [PRD](/build/prd).

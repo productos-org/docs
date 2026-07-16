@@ -1,0 +1,40 @@
+---
+title: "Architecture (optional)"
+description: "The optional technical deep-dive inside Define: eight architecture sections, decision records, and infrastructure cost estimates."
+---
+
+Architecture is an optional sub-phase inside the Define stage. Not every project needs it: a simple app can go straight from PRD to Design. Opt in when the technical shape of the system deserves real decisions, so the build that follows starts from decisions, not defaults.
+
+## What it produces
+
+- **Eight architecture sections**, real system design documents: system overview, container architecture, database design, API design, deployment architecture, security architecture, design patterns, and technical risks
+- **Architecture decision records (ADRs)**, each captured with its context and consequences
+- **Infrastructure cost estimates**, projecting the running cost of the proposed architecture
+
+## Who runs it
+
+The [Architect Agent](/agents/architect), a system design and technical architecture specialist. One boundary matters: it designs the system; it does not write the app code. Implementation belongs to the [Fullstack Builder](/agents/fullstack-builder) in the Develop stage.
+
+Like the PRD, the architecture document is written behind an outline: the Orchestrator scaffolds the architecture outline, then delegates one section per call (`write_architecture_section`). Before writing, the agent loads your locked constraints, so the design respects tech-stack facts you have already fixed rather than reinventing them.
+
+## What it reads
+
+- The PRD sections from [Define](/build/prd)
+- Structured project constraints
+- Locked tech-stack facts
+
+## How you steer it
+
+- **Lock your constraints first.** If you already know the stack, the hosting target, or a hard compliance requirement, get it into the project constraints before the sections are written; the agent reads them before every section.
+- **Review the ADRs, not just the prose.** The decision records are where trade-offs live. Each one states the context and the consequences, which is exactly where to push back if a choice does not fit your situation.
+- **Ask for the cost estimate early.** `estimate_infrastructure_cost` projects what the proposed architecture costs to run, and it is cheaper to change an architecture on paper than in production.
+
+<Note>
+Skipping this sub-phase does not mean the build is unplanned; the Fullstack Builder still works from the PRD and the design system. It means the technical decisions are made during implementation instead of being documented ahead of it.
+</Note>
+
+## What happens next
+
+Architecture wraps up the Define stage. The Orchestrator proposes the transition to Design, where the [Design Agent](/agents/design) and [Design System Agent](/agents/design-system) turn the spec into flows, screens, and a token system, and the architecture documents remain in the project context for the Develop stage to build against.
+
+Continue to [Design](/build/design-stage).

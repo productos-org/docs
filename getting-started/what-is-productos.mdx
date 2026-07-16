@@ -1,0 +1,55 @@
+---
+title: "What is ProductOS?"
+description: "ProductOS is an AI-native product development platform: describe an idea once and a team of AI agents researches, specs, designs, codes, and ships it."
+---
+
+ProductOS is an AI-native product development platform. You describe an idea once; a team of specialized AI agents researches it, writes the PRD, designs it, codes it, and deploys it. Every agent works from the same project context, so nothing gets lost between stages: the research informs the PRD, the PRD informs the design, and the design informs the code.
+
+## One idea, one shared context
+
+Most AI tools handle a single slice of product work. You research in one tool, spec in another, design in a third, and paste context between them. ProductOS replaces that relay race with a single pipeline:
+
+```
+Ideation -> Research -> PRD -> Design -> Develop
+```
+
+An Orchestrator agent routes all work and is the only agent that talks to you. It proposes stage transitions for your approval, then hands the shared context to the specialist for that stage. QA and deployment are on-demand actions you can trigger whenever you want to verify or ship.
+
+## The agent team
+
+<CardGroup cols={2}>
+  <Card title="Ideation and Research" icon="lightbulb" href="/agents/ideation">
+    A Socratic Ideation Agent sharpens the idea and logs assumptions. The Research Agent runs multi-source, cited research across the web, Reddit, review sites, app stores, and GitHub.
+  </Card>
+  <Card title="PRD and Architecture" icon="file-text" href="/agents/prd">
+    The PRD Agent writes section by section behind an outline-approval gate, with four templates. An optional Architect Agent adds architecture sections, ADRs, and infra cost estimates.
+  </Card>
+  <Card title="Design and Build" icon="palette" href="/agents/design">
+    Design agents produce user flows, screen specs, design tokens, and dark plus light HTML previews. A Fullstack Builder codes the app headlessly in your project sandbox.
+  </Card>
+  <Card title="QA and Deploy" icon="rocket" href="/agents/qa">
+    The QA Agent tests your app in a real headless browser, including an accessibility audit. The Deploy Agent ships to a live URL with up to 3 self-fix iterations.
+  </Card>
+</CardGroup>
+
+## Three surfaces, one account
+
+| Surface | URL | What it does |
+|---------|-----|--------------|
+| **Build** | [beta.productos.dev](https://beta.productos.dev) | The flagship full pipeline, from idea to deployed product |
+| **Code** | [develop.productos.dev](https://develop.productos.dev) | AI app builder with a live cloud sandbox |
+| **Design** | [design.productos.dev](https://design.productos.dev) | UI generation and templates |
+
+One account works everywhere, and your credits are shared across all three surfaces.
+
+## You own the code
+
+Generated code syncs to your own GitHub repository as it is written. You can export everything at any time. There is no lock-in: the output is a standard codebase you can take anywhere. See [Code ownership](/platform/code-ownership).
+
+## Where your work runs
+
+Projects run in isolated cloud sandboxes with live preview URLs, so you watch the app take shape as agents build it. Your project context (PRD, research, designs) is also available in Cursor and Claude over [MCP](/integrations/mcp), so you can keep building in your own tools.
+
+## Start free
+
+There is a free tier and no credit card is required to start. Sign up at [beta.productos.dev](https://beta.productos.dev/sign-up), then follow the [quickstart](/getting-started/quickstart).

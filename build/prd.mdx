@@ -1,0 +1,63 @@
+---
+title: "PRD (Define)"
+description: "How the Define stage writes your product requirements document section by section, behind an outline-approval gate, in four templates."
+---
+
+Define is the third stage of the Build pipeline. It translates the concept and the research into a structured product requirements document: the spec that Design and Develop will execute against.
+
+## What the stage produces
+
+- The PRD itself, written one section at a time, plus an executive summary
+- In revision mode, targeted edits to an already-approved document
+
+## Who runs it
+
+The [PRD Agent](/agents/prd). Its defining rule, from its own system prompt: "Every section you write must be grounded in the prior stages' artifacts, not invented from scratch." Because it writes against the actual ideation and research records, every requirement traces back to evidence. When a section needs a fact it does not have, it consults the Research or Ideation Agent directly, or fills small factual gaps with a web search, rather than guessing.
+
+## The outline-approval gate
+
+The document is not generated in one shot. The flow is:
+
+<Steps>
+  <Step title="Outline first">
+    The Orchestrator scaffolds a PRD outline from your chosen template and the project context.
+  </Step>
+  <Step title="You approve it">
+    The outline is the contract for the document. Nothing gets written until the structure is right, so reshaping the doc costs a conversation, not a rewrite.
+  </Step>
+  <Step title="Section-by-section writing">
+    The PRD Agent writes one section per delegation, loading the project's locked constraints before writing each one.
+  </Step>
+</Steps>
+
+## The four templates
+
+| Template | Sections | Best for |
+|----------|----------|----------|
+| ProductOS Standard | 10 | Most products; the default, full-coverage spec |
+| Amazon PRFAQ | 8 | Working backwards from the press release and FAQ |
+| Lean | 6 | Early-stage concepts where speed beats coverage |
+| Enterprise / Regulated | 12 | Products with compliance, audit, or procurement needs |
+
+## What it reads
+
+- The ideation concept brief
+- The research synthesis from [Discover](/build/research)
+- The section spec from your approved outline
+- The project's locked constraints
+
+## How you steer it
+
+- **Spend your attention on the outline.** It is the highest-leverage review point; approving a good outline is most of the work of getting a good PRD.
+- **Challenge sections against the evidence.** Every claim should trace to an ideation or research artifact; if one does not, say so and the section gets rewritten against the record.
+- **Use revision mode for changes.** After approval, the agent makes targeted edits instead of regenerating, so an approved spec stays approved and your review effort is not thrown away.
+
+<Tip>
+If your product has real technical complexity, run the optional [Architecture](/build/architecture) sub-phase inside Define before moving on. The Architect Agent turns the PRD into system design documents and ADRs.
+</Tip>
+
+## What happens next
+
+With the PRD approved (and architecture documented, if you opted in), the Orchestrator proposes the transition to Design. The [Design Agent](/agents/design) reads the concept, the research, and the PRD, and designs the product you actually defined.
+
+Continue to [Architecture](/build/architecture) or skip ahead to [Design](/build/design-stage).

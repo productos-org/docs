@@ -1,0 +1,52 @@
+---
+title: "MCP"
+description: "What the Model Context Protocol is, why ProductOS integrates over it, and what parts of your project context it exposes to Cursor and Claude."
+---
+
+The Model Context Protocol (MCP) is an open standard that lets AI clients read from and write to external context sources through one consistent interface. A service implements the protocol once, and any MCP-capable client, such as Cursor or Claude, can discover and use it without custom integration code.
+
+ProductOS uses MCP to expose your project as a live context source. Instead of pasting your PRD into a chat window and hoping it sticks, you connect the tool once, and it works against the actual product context.
+
+## What ProductOS exposes over MCP
+
+Your ProductOS project context is available in Cursor and Claude over MCP. That context includes:
+
+| Context | What the connected tool sees |
+|---------|------------------------------|
+| **The PRD** | Live product requirements: scope, user stories, and acceptance criteria, so generated code and analysis answer to the spec instead of guessing. |
+| **The research** | Market findings and user insights, so implementation and product decisions carry the reasoning behind the product. |
+| **The designs** | Flows and UI decisions, keeping output aligned with the intended experience. |
+
+Because both clients read the same source, whatever you open sees the same requirements and the same constraints. The context is live: changes to the product definition surface in the connected tool instead of going stale.
+
+## Why a protocol instead of copy-paste
+
+- **Context, not snapshots.** A pasted PRD is a stale copy the moment you paste it. Over MCP, the client reads the current state of your project every time.
+- **One source of truth.** Cursor and Claude both work from the same shared context, so there is no drift between the tool where you plan and the tool where you code.
+- **Bidirectional by design.** MCP is a two-way channel. Tools can read your product context and write work back into it, so refinements you make in the editor land where the rest of the pipeline can use them.
+
+## Connecting a client
+
+The connection flow is the same for any MCP client:
+
+<Steps>
+  <Step title="Open your ProductOS project">
+    Pick the project whose context you want to expose and open its integration settings to reveal the MCP connection.
+  </Step>
+  <Step title="Add the MCP server to your client">
+    Add the ProductOS MCP endpoint to the client's MCP configuration (Cursor's MCP configuration, or Claude's connector settings) and authorize it.
+  </Step>
+  <Step title="Work against live context">
+    The client now treats your ProductOS project as a context source it can read and write.
+  </Step>
+</Steps>
+
+Client-specific walkthroughs: [Cursor](/integrations/cursor) and [Claude](/integrations/claude).
+
+<Note>
+The MCP connection is part of the core ProductOS workflow. You can start free; no paid plan is required to connect Cursor or Claude.
+</Note>
+
+## MCP and code ownership
+
+MCP handles context; [GitHub sync](/integrations/github) handles code. Whatever a connected tool produces is your code, and the full codebase syncs to your own GitHub repository. Together the two integrations mean neither your product context nor your code is trapped inside ProductOS. See [Code ownership](/platform/code-ownership).
