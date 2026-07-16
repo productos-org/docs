@@ -15,7 +15,7 @@
   },
   "favicon": "/favicon.svg",
   "appearance": {
-    "default": "dark"
+    "default": "system"
   },
   "navbar": {
     "links": [
