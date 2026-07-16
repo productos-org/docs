@@ -22,7 +22,7 @@ Preview at http://localhost:3000.
 
 1. Push this folder as its own GitHub repo (e.g. `productos-org/productos-docs`).
 2. In the [Mintlify dashboard](https://dashboard.mintlify.com), create a project and install the Mintlify GitHub app on that repo.
-3. Set the custom domain to `docs.productos.dev` (dashboard: Settings, Custom domain) and add the CNAME in the DNS provider.
+3. Set the custom domain to `productos.dev` with subpath `/docs` (dashboard: Settings, Custom domain). Do NOT change DNS; see the warning below.
 4. Every push to main auto-deploys.
 
 **DNS warning:** never point productos.dev DNS at Mintlify (their domain-setup
