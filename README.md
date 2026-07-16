@@ -25,6 +25,13 @@ Preview at http://localhost:3000.
 3. Set the custom domain to `docs.productos.dev` (dashboard: Settings, Custom domain) and add the CNAME in the DNS provider.
 4. Every push to main auto-deploys.
 
+**DNS warning:** never point productos.dev DNS at Mintlify (their domain-setup
+flow suggests a CNAME to cname.mintlify.builders). The site uses the
+reverse-proxy option instead: productos.dev stays on Vercel, and the website's
+next.config rewrites /docs/* to productos.mintlify.dev. An apex CNAME to
+Mintlify put the whole domain behind their edge and intermittently served the
+docs at the homepage (incident: 2026-07-16).
+
 ## Conventions
 
 - No em dashes in copy (house rule).
