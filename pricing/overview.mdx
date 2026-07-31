@@ -1,0 +1,90 @@
+---
+title: "Pricing overview"
+description: "How ProductOS pricing works: the model, audience segments, commercial units, how to choose a plan, and links to the public pricing page."
+---
+
+ProductOS pricing has three independent commercial dimensions. You pay for the products you operate, the people who work on them, and the AI capacity they consume. Every plan is a combination of those three dimensions, tuned for a specific audience.
+
+<Warning>
+  This section documents the approved commercial specification that ProductOS is implementing. Public checkout and in-product entitlement availability may roll out in stages. Use the live [pricing page](https://productos.dev/pricing) or contact [hello@productos.dev](mailto:hello@productos.dev) for current purchase availability.
+</Warning>
+
+## The three commercial units
+
+**Products** are the primary unit. A product becomes active once it has a live domain, backend, or app store release. Its design system, code, and history persist through forks, clones, and transfers. You choose how many products you operate and add more as you grow.
+
+**Licenses** are named, role-based access for the humans on your team. User Licenses can build and deploy. Collaborator Licenses can review and edit planning artifacts. Review Licenses can view and approve. Each plan defines a starting mix, and you add more licenses as your team grows.
+
+**AI credits** are included capacity and a cost-control layer, not a billing switch. Credits pool at the workspace level on team and agency plans, and you set budgets by product, member, or department. When credits run out, new AI builds pause until the allowance renews or an admin approves a top-up.
+
+## Audience segments
+
+| Segment | Who it is for | Starting point |
+| --- | --- | --- |
+| **Individuals** | Solo makers, indie developers, founders | Hobby $$0, Builder $$29/mo, Founder \$79/mo |
+| **Teams** | Startups, SaaS teams, product departments | Startup $$399/mo, Business $$1,199/mo, Enterprise custom |
+| **Agencies** | Boutique studios, established agencies, delivery organizations | Studio $$599/mo, Scale $$1,499/mo, Enterprise custom |
+
+See [Individuals](/pricing/individuals), [Teams](/pricing/teams), or [Agencies](/pricing/agencies) for the full plan details.
+
+## How to choose a plan
+
+Start with the segment that fits your situation, then choose the plan within that segment based on how many products you operate and how many people need to build.
+
+If you are exploring or learning, **Hobby** is the free entry tier.
+
+If you are shipping one production product, **Builder** gives you the tools and AI capacity to do it properly.
+
+If you are a founder with a portfolio, **Founder** covers three active products, Frontier model access, and one mobile release channel.
+
+If you are a team, **Startup** is the entry point with pooled AI credits, named members, and admin controls.
+
+If you are managing multiple products across a growing team, **Business** adds 20 products, 25,000 pooled credits, and rollover credits for one billing cycle.
+
+If you need custom volume, SSO, SCIM, private model routing, or dedicated infrastructure, **Enterprise** is scoped to your requirements.
+
+## AI credits and model tiers
+
+Credits are measured per call and vary by model capability. Three tiers are available depending on your plan:
+
+**Essential** models handle ideation, classification, summaries, and routine edits at low credit cost.
+
+**Advanced** models handle stronger reasoning, coding, multimodal design, and long-context product work.
+
+**Frontier** models handle architecture decisions, high-fidelity design, difficult coding, and final review. Frontier access is included on Business, Scale, and Enterprise plans, and available on lower plans through top-ups.
+
+See [AI credits and models](/pricing/ai-credits-and-models) for the full detail.
+
+## Licenses and access
+
+Every license is tied to one human identity. You cannot share a login or swap credentials between people. The three license types are:
+
+**User License** can run agents, build, deploy, export, and manage active products. This is the full-access paid license.
+
+**Collaborator License** can edit planning artifacts, requirements, backlog items, and design feedback. It cannot run agents or deploy.
+
+**Review License** can view and approve invited products. It does not consume AI capacity.
+
+See [Licenses and access](/pricing/licenses-and-access) for the full capability matrix.
+
+## Products, channels, and billing
+
+A product is a live digital experience. Paid plans with active-product capacity include web production; Hobby provides a branded draft preview. Mobile and desktop are channel add-ons in most paid plans. Founder includes one mobile release channel.
+
+Billing is monthly by default. Annual billing is priced at 10 times the monthly price and charged once annually, which includes two months compared with paying monthly for a full year. The displayed monthly equivalent is rounded to the nearest dollar.
+
+See [Products, channels and billing](/pricing/products-channels-and-billing) for the full detail.
+
+## Current pricing status
+
+The plans described in these docs reflect the current product-based pricing available at [productos.dev/pricing](https://productos.dev/pricing). Some features described here are actively being rolled out. See [Implementation reference](/pricing/implementation-reference) for the distinction between the commercial specification and the current implementation status.
+
+## Related pages
+
+- [Individuals](/pricing/individuals): Hobby, Builder, Founder plans in detail
+- [Teams](/pricing/teams): Startup, Business, Enterprise plans in detail
+- [Agencies](/pricing/agencies): Studio, Scale, Enterprise plans in detail
+- [AI credits and models](/pricing/ai-credits-and-models): credits, pooling, budgets, top-ups, model tiers
+- [Licenses and access](/pricing/licenses-and-access): role-based capability matrix
+- [Products, channels and billing](/pricing/products-channels-and-billing): product lifecycle, channels, billing mechanics
+- [Implementation reference](/pricing/implementation-reference): developer-oriented commercial contract

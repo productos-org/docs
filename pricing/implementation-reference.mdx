@@ -1,0 +1,340 @@
+---
+title: "Implementation reference"
+description: "Commercial implementation contract for developers: canonical entities, entitlement fields, plan matrix, billing events, credit ledger behavior, and acceptance checklist."
+---
+
+This page translates the approved commercial model into a target implementation contract for developers building ProductOS billing and entitlements. It defines normalized entities, entitlement fields, plan invariants, billing events, and acceptance criteria.
+
+<Warning>
+  This is a target contract, not a claim that every field or workflow already exists in production. Map these concepts to the current application schema, preserve existing customer data, and verify migrations against the live billing provider before rollout. Customer-facing availability is governed by the live [pricing page](https://productos.dev/pricing) and executed order terms.
+</Warning>
+
+Code blocks on this page are implementation-neutral pseudocode. Names such as `Workspace`, `License`, and `CreditEvent` describe required commercial behavior; they do not prescribe database table names.
+
+## Canonical entities
+
+### Workspace
+
+The workspace is the top-level billing and administrative container. All plans, products, licenses, and credits belong to a workspace.
+
+```text
+Workspace {
+  id: string
+  plan: PlanKey
+  billingCycle: 'monthly' | 'annual'
+  createdAt: timestamp
+}
+```
+
+### Plan
+
+A plan defines the commercial terms for a workspace. Plans are identified by a `PlanKey`.
+
+```text
+PlanKey =
+  | 'hobby'
+  | 'builder'
+  | 'founder'
+  | 'startup'
+  | 'business'
+  | 'enterprise'
+  | 'studio'
+  | 'scale'
+  | 'agency_enterprise'
+```
+
+### Product
+
+A product is a digital experience operated for end users. A product is `active` once it has a live domain, backend, or app store release. A product that is in development but not yet released is a `draft`.
+
+```text
+Product {
+  id: string
+  workspaceId: string
+  name: string
+  status: 'draft' | 'active' | 'archived'
+  lineage: string (immutable identifier surviving fork/clone/transfer)
+  createdAt: timestamp
+  activatedAt: timestamp | null
+  archivedAt: timestamp | null
+}
+```
+
+A product becomes active when `activatedAt` is set. A product that is archived has `archivedAt` set and its slot is freed for a new product.
+
+### License
+
+A license is a named entitlement tied to one human identity.
+
+```text
+License {
+  id: string
+  workspaceId: string
+  userId: string
+  role: 'user' | 'collaborator' | 'review'
+  status: 'active' | 'released' | 'reassigned'
+  assignedAt: timestamp
+  releasedAt: timestamp | null
+  reassignedTo: string | null
+}
+```
+
+A license cannot be shared. `userId` must reference a single human identity. The implementation must deter shared-login exploitation through identity, device, concurrency, and audit controls.
+
+### AI Credit Ledger
+
+The credit ledger records consumption, allocation, rollover, and top-up events.
+
+```text
+CreditEvent {
+  id: string
+  workspaceId: string
+  type: 'allocation' | 'consumption' | 'rollover' | 'topup' | 'expiry'
+  amount: number (positive for allocation/rollover/topup, negative for consumption/expiry)
+  balanceAfter: number
+  productId: string | null
+  userId: string | null
+  timestamp: timestamp
+}
+```
+
+The current balance is derived from the immutable events for the workspace. Production implementations must scope the calculation to non-expired credit lots or maintain a transactionally updated balance projection. Do not sum historical allocations after their expiry window.
+
+## Entitlement fields
+
+The canonical source of truth for workspace entitlements is the workspace record. Do not compute entitlements from plan metadata at the client side; always query the server-side workspace record.
+
+### Per-plan entitlement matrix
+
+| Field | Hobby | Builder | Founder | Startup | Business | Enterprise | Studio | Scale | Agency Enterprise |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `maxActiveProducts` | 0 (draft only) | 1 | 3 | 5 | 20 | 40\+ | 10 | 40 | Custom |
+| `monthlyCredits` | 100 | 750 | 2,000 | 8,000 | 25,000 | Custom | 12,000 | 35,000 | Custom |
+| `creditsPool` | false | false | false | true | true | true | true | true | true |
+| `creditsRollover` | false | 1 cycle | 1 cycle | 1 cycle | 1 cycle | Custom | 1 cycle | 1 cycle | Custom |
+| `maxAgents` | 1 | 2 | 3 | 5 | 15 | Custom | 8 | 25 | Custom |
+| `modelTier` | essential | essential\_advanced | advanced\_frontier | advanced\_frontier | frontier | private\_catalog | advanced\_frontier | frontier | private\_catalog |
+| `autoRouter` | false | topup\_required | true | true | true | custom | false | true | custom |
+| `channelWeb` | preview\_only | true | true | true | true | true | true | true | custom |
+| `channelMobile` | false | false | 1 included | add-on | add-on | add-on | add-on | add-on | add-on |
+| `channelDesktop` | false | false | false | add-on | add-on | add-on | add-on | add-on | add-on |
+| `maxNamedMembers` | 1 | 1 | 1 | 5 | 25 | 50\+ | 5 | 15 | Custom |
+| `maxUsers` | 1 | 1 | 1 | 3 | 10 | Custom | 5 | 15 | Custom |
+| `maxCollaborators` | 0 | 0 | 0 | 2 | 15 | Custom | 0 | 0 | Custom |
+| `maxReviewers` | 0 | 0 | 3 | unlimited | unlimited | unlimited | unlimited | unlimited | unlimited |
+| `whiteLabel` | false | false | false | false | false | true | false | true | true |
+| `byok` | false | false | false | false | false | true | false | false | true |
+| `sso` | false | false | false | false | false | true | false | false | true |
+| `scim` | false | false | false | false | false | true | false | false | true |
+
+### Active product count
+
+The number of active products is the count of products in the workspace where `status = 'active'`. Draft products do not count. Archived products do not count.
+
+```text
+activeProductCount(workspaceId) = COUNT(Product WHERE workspaceId = workspaceId AND status = 'active')
+```
+
+When `activeProductCount` exceeds `maxActiveProducts`, no new products can be activated. Existing active products are not affected.
+
+### Credit consumption
+
+Credit consumption is measured per model call. The credit cost depends on the active model tier, task type, context, and modality according to the server-side rate card. Exact rates are internal and may change as provider pricing and routing evolve.
+
+The credit ledger is debited on call completion, not on call start. If a call fails, no credits are consumed.
+
+```text
+consumeCredits(workspaceId, amount, productId?, userId?) {
+  balance = getBalance(workspaceId)
+  if (balance < amount) return INSUFFICIENT_CREDITS
+  insert CreditEvent {
+    type: 'consumption',
+    amount: -amount,
+    balanceAfter: balance - amount,
+    productId,
+    userId,
+  }
+}
+```
+
+### Credit exhaustion
+
+When the credit balance reaches zero:
+
+1. New AI build requests return `INSUFFICIENT_CREDITS`.
+2. Existing in-progress builds continue to completion.
+3. Products already running in production are not affected.
+4. Admins receive a notification.
+5. Admins can approve a top-up.
+
+### Credit rollover
+
+On paid plans, at the end of each billing cycle, the remaining included-credit balance rolls into the next cycle up to a maximum of one cycle's allocation. Hobby credits expire at renewal. Enterprise rollover behavior is contractual.
+
+```text
+rollover(workspaceId) {
+  includedBalance = getUnspentIncludedBalance(workspaceId)
+  allocation = getMonthlyAllocation(workspaceId)
+  rolloverAmount = min(includedBalance, allocation)
+  expireCurrentIncludedCreditLots(workspaceId)
+  insert CreditEvent { type: 'rollover', amount: rolloverAmount }
+  insert CreditEvent { type: 'allocation', amount: allocation }
+}
+```
+
+Top-up lots follow their purchase terms and are not expired by the included-credit rollover job.
+
+## Annual billing formula
+
+Annual billing is priced at 10 times the monthly price and charged once per year. The displayed monthly equivalent is rounded to the nearest dollar.
+
+```text
+annualTotal = monthlyPrice * 10
+displayedMonthly = Math.round(monthlyPrice * 10 / 12)
+```
+
+The actual billing event charges `annualTotal`. The displayed figure is for marketing purposes only.
+
+## License enforcement
+
+When a license is assigned to a user, the platform records `userId` on the license. All API calls and UI actions are checked against the user's license role.
+
+```text
+checkAccess(workspaceId, userId, action) {
+  license = getActiveLicense(workspaceId, userId)
+  if (!license) return DENIED
+  capability = CAPABILITY_MAP[license.role][action]
+  return capability ? ALLOWED : DENIED
+}
+```
+
+A user with no license, or a license with an insufficient role, cannot perform actions beyond their capability. This check happens server-side on every request.
+
+### Reassignment
+
+Reassignment is logged as a `reassigned` event on the old license and a new `assigned` event on the new license. There is a cooldown between reassignments on the same license slot.
+
+Concurrent reassignments are prevented by a lock on the license record during the reassignment transaction.
+
+## Concurrency enforcement
+
+Concurrency limits how many agents can run simultaneously for a workspace.
+
+```text
+checkConcurrency(workspaceId) {
+  activeCount = countRunningAgents(workspaceId)
+  maxConcurrency = getMaxConcurrency(workspaceId)
+  if (activeCount >= maxConcurrency) {
+    return CONCURRENCY_EXCEEDED
+  }
+  return ALLOWED
+}
+```
+
+The concurrency limit applies across all products and all users in a workspace. It is not a per-user or per-product limit.
+
+## Channel entitlements
+
+Channel entitlements are checked against the workspace plan and the product configuration.
+
+```text
+checkChannel(workspaceId, productId, channel) {
+  plan = getPlan(workspaceId)
+  if (channel === 'web') return plan.channelWeb === true ? ALLOWED : PREVIEW_ONLY
+  if (channel === 'mobile') {
+    included = hasRemainingIncludedChannel(workspaceId, productId, 'mobile')
+    addOn = productHasAddOn(productId, 'mobile')
+    return included || addOn ? ALLOWED : CHANNEL_NOT_INCLUDED
+  }
+  if (channel === 'desktop') {
+    addOn = productHasAddOn(productId, 'desktop')
+    return addOn ? ALLOWED : CHANNEL_NOT_INCLUDED
+  }
+}
+```
+
+## Agency white-label gates
+
+White-label is a workspace-level entitlement. When `whiteLabel = true`, the workspace can serve client-facing surfaces (previews, reports, client portal) under the agency's branding.
+
+```text
+checkWhiteLabel(workspaceId) {
+  plan = getPlan(workspaceId)
+  return plan.whiteLabel === true
+}
+```
+
+White-label does not affect the billing relationship between the agency and ProductOS. It only controls whether the agency's branding appears on client-facing surfaces.
+
+## Product lifecycle events
+
+| Event | Trigger | Billing effect |
+| --- | --- | --- |
+| Product activated | `activatedAt` set for first time | Product counts toward `maxActiveProducts` |
+| Product archived | `archivedAt` set | Product no longer counts toward `maxActiveProducts` |
+| Product reactivated | `archivedAt` cleared | Product counts toward `maxActiveProducts` |
+| Product transferred | `workspaceId` changes | Source workspace product count decreases; destination increases |
+| Product cloned | New product created from lineage | New product starts as draft; activation counts when released |
+
+## Lineage
+
+Lineage is an immutable identifier assigned to a product at creation. It survives fork, clone, new repository, new domain, and workspace transfer. Lineage is used to prevent duplicate billing when a product is reconstructed from its history.
+
+```text
+getLineage(productId) = Product[productId].lineage
+```
+
+The lineage cannot be changed after product creation. Two products with the same lineage are the same product history; only one can be active at a time within a workspace.
+
+## Migration and versioning
+
+When a workspace changes plans:
+
+1. Preserve product history, identities, audit events, and the credit ledger.
+2. Apply the effective date and any proration or true-up shown at checkout or defined in the executed order.
+3. Do not silently archive products or remove a live entitlement.
+4. Before a downgrade, validate product, license, channel, and concurrency usage against the destination plan. Require remediation or an alternative plan when the workspace exceeds the destination allowance.
+5. Record both the previous and resulting entitlement snapshots for billing support and rollback.
+
+Do not invent credit forfeiture or grandfathering behavior in the client. The billing service must return the effective credit balance and expiry schedule after the plan change.
+
+## Analytics and audit
+
+The following events are required to be logged and queryable:
+
+- `license.assigned`: userId, role, timestamp
+- `license.released`: userId, role, timestamp
+- `license.reassigned`: fromUserId, toUserId, role, timestamp
+- `product.activated`: productId, timestamp
+- `product.archived`: productId, timestamp
+- `product.transferred`: productId, fromWorkspaceId, toWorkspaceId, timestamp
+- `credit.consumption`: workspaceId, amount, productId, userId, timestamp
+- `credit.topup`: workspaceId, amount, adminUserId, timestamp
+- `credit.rollover`: workspaceId, amount, timestamp
+- `credit.expiry`: workspaceId, amount, timestamp
+- `billing.cycle`: workspaceId, amount, cycleStart, cycleEnd, timestamp
+
+These logs are required for billing reconciliation, compliance auditing, and debugging entitlement issues.
+
+## Implementation acceptance checklist
+
+Before shipping a billing or entitlement feature, verify:
+
+- [ ] Credit deduction is recorded atomically with the call completion, not on start
+- [ ] Insufficient credit returns `INSUFFICIENT_CREDITS` and does not silently allow overage (unless overage is explicitly configured)
+- [ ] Product activation is gated against `maxActiveProducts` and returns a clear error
+- [ ] Archive frees the product slot immediately
+- [ ] Reactivation reclaims the slot
+- [ ] License role checks happen server-side on every action
+- [ ] Concurrent reassignments are prevented by database-level locking
+- [ ] Concurrency limit is enforced across all products and users in a workspace
+- [ ] Annual billing charges exactly 10 times the monthly price at renewal
+- [ ] Displayed monthly equivalent is `Math.round(monthly * 10 / 12)`
+- [ ] Paid license additions are prorated for the remaining term, charged immediately on monthly billing and recorded for annual true-up on annual billing
+- [ ] Paid license removals take effect at renewal
+- [ ] Channel add-ons are per-product, not per-workspace
+- [ ] White-label check is workspace-level, not per-product
+- [ ] All billing events are logged with timestamp, amount, and actor
+- [ ] Paid-plan included-credit rollover clears expired credits and rolls over no more than one cycle's allocation
+- [ ] Lineage is immutable and preserved across fork, clone, transfer, and new repository
+- [ ] No new pricing page or nav description contains stale plan names or numbers

@@ -1,0 +1,135 @@
+---
+title: "AI credits and models"
+description: "How AI credits work as included capacity and cost control: exact allowances, pooling, budgets, top-ups, exhaustion, and model tier gates."
+---
+
+AI credits are the capacity unit for every AI generation across ProductOS. Each plan includes a monthly allowance, so credits act as capacity and cost control rather than a per-prompt invoice.
+
+## How credits work
+
+Every call to a model consumes credits. More capable models, longer context, multimodal inputs, and more complex tasks generally consume more credits. ProductOS shows an estimated credit cost before an expensive action; the final credit cost follows the active model and task rate.
+
+Credits are included capacity and a cost-control mechanism. The primary commercial unit is the product you operate, not the AI calls you make within it. You still pay for your plan regardless of how heavily you use the AI.
+
+## Included credits by plan
+
+### Individuals
+
+| Plan | Monthly credits |
+| --- | --- |
+| Hobby | 100 |
+| Builder | 750 |
+| Founder | 2,000 |
+
+### Teams
+
+| Plan | Monthly credits |
+| --- | --- |
+| Startup | 8,000 pooled |
+| Business | 25,000 pooled |
+| Enterprise | Custom committed capacity |
+
+### Agencies
+
+| Plan | Monthly credits |
+| --- | --- |
+| Studio | 12,000 pooled |
+| Scale | 35,000 pooled |
+| Enterprise | Custom committed capacity |
+
+## Credit measurement
+
+Credit consumption varies by model and by task complexity. A call to a fast, lightweight model consumes far fewer credits than a call to a top-tier reasoning model. Multimodal calls (text plus image generation or understanding) consume more credits than text-only calls.
+
+ProductOS provides a cost preview before you commit to an action. The preview shows the estimated credit cost based on the current model and task type.
+
+## Pooling
+
+On individual plans, credits belong to the individual and do not pool with anyone else.
+
+On team and agency plans, credits pool at the workspace level. All members draw from the same pool. Admins can set budgets by product, department, member, or client to distribute capacity across the organization.
+
+Review licenses do not consume AI capacity because they cannot run agents.
+
+## Budgets and limits
+
+Team and agency admins can set AI budgets at multiple levels:
+
+- **Product budget**: limit AI usage for a specific product
+- **Member budget**: limit AI usage for a specific named member
+- **Department budget**: limit AI usage for a group of members
+- **Client budget**: (agencies only) limit AI usage for a specific client product
+
+Budgets are configurable by admins and do not require a plan change. When a budget is exhausted, the relevant product or member cannot run new AI builds until an admin approves a top-up.
+
+## Top-ups
+
+When included credits are exhausted, new AI builds pause until the allowance renews or an admin approves a top-up. Top-ups are approved by an admin, not automatic, so there are no surprise charges.
+
+On team plans, only admins can purchase top-ups. On agency plans, agencies can purchase top-ups and allocate them to specific client products.
+
+Top-up pricing is not published in these docs because it varies by plan and volume. Contact [hello@productos.dev](mailto:hello@productos.dev) for current top-up pricing.
+
+## Rollover
+
+Paid-plan included credits roll over for one billing cycle. Hobby credits do not roll over.
+
+For example, if a Business workspace has 25,000 monthly credits and uses 20,000 in January, the remaining 5,000 carries into February. Rollover is capped at one cycle; it does not accumulate indefinitely.
+
+Purchased top-up credits follow the terms shown at purchase.
+
+## Exhaustion behavior
+
+When AI credits run out, new AI builds pause. Products already running in production remain available. You are notified as you approach your limit.
+
+The exhaustion behavior is the same across all plans: no new AI builds start until the allowance renews or a top-up is approved. There is no automatic overage billing.
+
+## Model tiers
+
+ProductOS offers three model tiers. Which tiers are available to you depends on your plan.
+
+### Essential
+
+Essential models handle ideation, classification, summaries, and routine edits at low credit cost. These models are fast and efficient for routine work.
+
+Included in: Hobby, Builder
+
+### Advanced
+
+Advanced models handle stronger reasoning, coding, multimodal design, and long-context product work. They consume more credits than Essential models.
+
+Included in: Builder, Founder, Startup, Business, Studio, Scale
+
+### Frontier
+
+Frontier models handle architecture decisions, high-fidelity design, difficult coding, and final review. These are the most capable models available and consume the most credits.
+
+Included in: Founder (with Auto Router), Startup, Business, Studio, Scale, Enterprise
+
+On Builder, Frontier model access is available through qualifying top-ups.
+
+## Auto Router
+
+The ProductOS Auto Router selects the right model for each task by balancing reasoning quality, speed, multimodality, and cost. It routes research, strategy, design, coding, QA, and operations independently, choosing Essential, Advanced, or Frontier depending on the task demands and your plan entitlements.
+
+On Founder, Startup, Business, and Scale plans, the Auto Router is included. Builder can add Frontier model access through qualifying top-ups.
+
+Manual model selection remains available where the plan and workspace policy allow it. Admins can also configure model allowlists to restrict which tiers specific teams, products, or stages may use.
+
+## Bring Your Own Key (BYOK) and Bring Your Own Model (BYOM)
+
+Team Enterprise and Agency Enterprise support Bring Your Own Key and Bring Your Own Model. Runs routed through approved customer-supplied credentials do not draw from the ProductOS included-credit pool. Usage remains logged so the workspace history stays complete.
+
+This is useful for organizations that have existing provider commitments or need to route specific workloads through their own accounts.
+
+See [BYOK and models](/platform/byok-and-models) for the full detail on connecting your own keys.
+
+## Related pages
+
+- [Pricing overview](/pricing/overview): how credits fit into the overall pricing model
+- [Individuals](/pricing/individuals): credit allowances for Hobby, Builder, Founder
+- [Teams](/pricing/teams): credit allowances for Startup, Business, Enterprise
+- [Agencies](/pricing/agencies): credit allowances for Studio, Scale, Enterprise
+- [Licenses and access](/pricing/licenses-and-access): how Review licenses avoid consuming AI capacity
+- [Products, channels and billing](/pricing/products-channels-and-billing): how products relate to AI capacity
+- [Implementation reference](/pricing/implementation-reference): credit ledger behavior for developers
