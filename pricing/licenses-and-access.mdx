@@ -1,0 +1,130 @@
+---
+title: "Licenses and access"
+description: "User, Collaborator, and Review Licenses: capability matrix, named-user policy, reassignment, SSO, SCIM, and concurrency controls."
+---
+
+Every ProductOS license is named and tied to one human identity. Licenses cannot be shared across multiple people, and credentials cannot be swapped between accounts. This keeps activity, approvals, and usage attributable to a person.
+
+## The three license types
+
+### User License
+
+User Licenses unlock the full ProductOS pipeline. A User License holder can:
+
+- View, comment on, and approve invited products
+- Edit planning docs, requirements, backlog items, and design feedback
+- Use AI for planning and design feedback
+- Edit source code, PRDs, and design systems
+- Run build agents and consume build capacity
+- Create new products
+- Deploy to production
+- Export or self-host
+- Connect GitHub
+
+### Collaborator License
+
+Collaborator Licenses cover everyone who needs to contribute to planning and design but does not need to build or deploy. A Collaborator can:
+
+- View, comment on, and approve invited products
+- Edit planning docs, requirements, backlog items, and design feedback
+- Use AI for planning and design feedback
+
+A Collaborator cannot run agents, edit source code, deploy, or create products.
+
+### Review License
+
+Review Licenses are for stakeholders who need visibility into product progress without productive access. A reviewer can:
+
+- View, comment on, and approve invited products
+
+Review Licenses do not consume AI capacity. Reviewers cannot run agents, edit artifacts, or access source code.
+
+## Capability matrix
+
+| Capability | User License | Collaborator License | Review License |
+| --- | --- | --- | --- |
+| View, comment, and approve invited products | Yes | Yes | Yes |
+| Edit planning docs, requirements, backlog, design feedback | Yes | Yes | No |
+| Use AI for planning and design feedback | Yes | Yes | No |
+| Edit source code, PRDs, design systems | Yes | No | No |
+| Run build agents and consume build capacity | Yes | No | No |
+| Create new products | Yes | No | No |
+| Deploy to production | Yes | No | No |
+| Export or self-host | Yes | No | No |
+| Connect GitHub | Yes | No | No |
+| Consume AI credits | Yes | Yes | No |
+
+## Named-user policy
+
+Each license is tied to a specific human being. You cannot:
+
+- Share login credentials across multiple people
+- Log in as someone else or let someone else log in as you
+- Assign one license to multiple people or rotate it between people without reassignment
+
+The product must enforce this named-user policy through identity, device, concurrency, and audit controls. Enforcement should stop shared-login exploitation without disrupting legitimate multi-device use.
+
+## Reassignment
+
+When a team member leaves or changes roles, an admin can reassign the license. Reassignment must be auditable, with a reasonable cooldown to prevent rotating one paid license among multiple people.
+
+A paid license released mid-term stays available for reassignment for the remainder of that term. You do not lose the value of the paid term when you release it early.
+
+## License billing
+
+Adding a User or Collaborator License creates a prorated obligation for the rest of the current term. Monthly workspaces charge it immediately. Annual workspaces record it for the annual true-up.
+
+Removing a license takes effect at your next renewal. The team keeps access through the end of what you already paid for.
+
+## Individual plan licenses
+
+Individual plans include one User License. Founder includes up to 3 free Review Licenses for stakeholders who need to see product progress without building.
+
+Individual plans do not include additional User or Collaborator Licenses. To add more people, upgrade to a team or agency plan.
+
+## Team and agency licenses
+
+Team and agency plans define a starting license mix and allow add-ons:
+
+**Startup**: 5 named members (3 User Licenses, 2 Collaborator Licenses, unlimited Review Licenses)
+
+- Additional User License: \$59 / month
+- Additional Collaborator License: \$15 / month
+
+**Business**: 25 named members (10 User Licenses, 15 Collaborator Licenses, unlimited Review Licenses)
+
+- Additional User License: \$55 / month
+- Additional Collaborator License: \$12 / month
+
+**Studio**: 5 User Licenses, unlimited Review Licenses
+
+- Additional User License: \$79 / month
+
+**Scale**: 15 User Licenses, unlimited Review Licenses
+
+- Additional User License: \$69 / month
+
+Enterprise plans define a custom license mix and volume.
+
+## Enterprise provisioning: SSO and SCIM
+
+On Enterprise plans, you can automate license provisioning and deprovisioning using your identity provider:
+
+**SAML or OIDC SSO** lets your team sign in with your existing identity provider. You control who has access through your identity provider rather than managing ProductOS credentials separately.
+
+**SCIM** (System for Cross-domain Identity Management) automates provisioning and deprovisioning. When someone joins the team, SCIM creates their ProductOS license assignment automatically. When someone leaves, SCIM deprovisions their access. This keeps the licensed-user count in sync with your organization without manual updates.
+
+SSO and SCIM are available on Enterprise plans. Contact [enterprise@productos.dev](mailto:enterprise@productos.dev) to discuss setup.
+
+## Concurrent device limits
+
+ProductOS enforces a reasonable concurrent device limit per named license. This prevents credential sharing without interfering with legitimate multi-device use. The specific limit depends on the plan and is enforced at the platform level.
+
+## Related pages
+
+- [Pricing overview](/pricing/overview): how licenses fit into the overall pricing model
+- [Individuals](/pricing/individuals): individual plan license details
+- [Teams](/pricing/teams): team license details and add-on pricing
+- [Agencies](/pricing/agencies): agency license details and add-on pricing
+- [Products, channels and billing](/pricing/products-channels-and-billing): how license changes affect billing
+- [Implementation reference](/pricing/implementation-reference): developer reference for license enforcement and entitlement fields

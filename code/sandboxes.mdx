@@ -1,6 +1,6 @@
 ---
 title: "Sandboxes"
-description: "Every Code project runs in its own isolated cloud sandbox with a live preview URL. Learn the lifecycle, cold boot behavior, and plan-based resources."
+description: "Every Code project runs in its own isolated cloud sandbox with a live preview URL. Learn the lifecycle, cold boot behavior, and capacity limits."
 ---
 
 Every project on the Code surface runs in its own isolated cloud sandbox: a disposable environment with a file system, a terminal, and a running dev server. The coding agent works inside the sandbox, and you watch the result through a live preview URL embedded in the workspace. Nothing runs on your machine, and AI-generated code never touches the ProductOS host environment.
@@ -27,20 +27,12 @@ A few things keep cold boots short:
 - **A hard ceiling on the loader**: if the preview cannot be restored within the time limit (150 seconds by default), you get an actionable error with options to try again or start a build, instead of an indefinite spinner.
 
 <Note>
-The preview loader is dismissed when the app actually responds, not on a fixed timer. If you see the loader for a while on a large project, the sandbox is still compiling; it will hand off as soon as the app serves a real page.
+  The preview loader is dismissed when the app actually responds, not on a fixed timer. If you see the loader for a while on a large project, the sandbox is still compiling; it will hand off as soon as the app serves a real page.
 </Note>
 
-## Resources by plan
+## Capacity and plan limits
 
-Sandbox memory is sized by your plan, so heavier builds get more headroom:
-
-| Plan | Sandbox RAM |
-|---|---|
-| Free | 8 GB |
-| Pro | 16 GB |
-| Max | 32 GB |
-
-Credit consumption is tracked per sandbox session and per AI call; you can review it on your usage page. See [Plans and credits](/getting-started/plans-and-credits).
+Plans govern active products, concurrent agents, and included AI capacity. ProductOS manages sandbox resources for the workload rather than selling RAM as a customer-facing pricing tier. AI usage is recorded in the workspace credit ledger and can be governed through plan and administrator limits. See [Pricing overview](/pricing/overview) and [AI credits and models](/pricing/ai-credits-and-models).
 
 ## Security notes
 

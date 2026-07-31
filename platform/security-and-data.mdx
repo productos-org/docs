@@ -20,7 +20,7 @@ Authenticated application routes are protected by middleware: unauthenticated re
 ## Where your data lives
 
 | Data | Storage |
-|------|---------|
+| --- | --- |
 | Account, sessions, provider keys | Shared auth database (Neon Postgres) |
 | Projects, research, PRDs, designs, code metadata | Per-surface application databases (Neon Postgres) |
 | File exports and code bundles | AWS S3 |
@@ -50,7 +50,7 @@ If you [bring your own provider keys](/platform/byok-and-models), they are store
 
 ## Billing data
 
-Payments are processed by Polar, a dedicated payment processor; ProductOS does not handle your card details directly. Usage is metered through a credit ledger, and your usage history includes a per-action breakdown you can review. See [Plans and credits](/getting-started/plans-and-credits).
+Payments are processed by Polar, a dedicated payment processor; ProductOS does not handle your card details directly. AI capacity is recorded through a workspace credit ledger so customers and administrators can understand usage without surprise overages. See [AI credits and models](/pricing/ai-credits-and-models).
 
 ## Questions
 

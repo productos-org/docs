@@ -39,8 +39,7 @@
               "getting-started/what-is-productos",
               "getting-started/quickstart",
               "getting-started/core-concepts",
-              "getting-started/projects-and-stages",
-              "getting-started/plans-and-credits"
+              "getting-started/projects-and-stages"
             ]
           },
           {
@@ -83,6 +82,24 @@
               "platform/byok-and-models",
               "platform/deployments-and-domains",
               "platform/security-and-data"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Pricing",
+        "groups": [
+          {
+            "group": "Pricing",
+            "pages": [
+              "pricing/overview",
+              "pricing/individuals",
+              "pricing/teams",
+              "pricing/agencies",
+              "pricing/ai-credits-and-models",
+              "pricing/licenses-and-access",
+              "pricing/products-channels-and-billing",
+              "pricing/implementation-reference"
             ]
           }
         ]
@@ -150,5 +167,12 @@
       "linkedin": "https://linkedin.com/company/productos-dev",
       "youtube": "https://youtube.com/@productosdotdev"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/getting-started/plans-and-credits",
+      "destination": "/pricing/overview",
+      "permanent": true
+    }
+  ]
 }
