@@ -1,38 +1,84 @@
 ---
 title: "Integrations overview"
-description: "Bring your ProductOS project context into Cursor and Claude over MCP, and sync the full generated codebase to your own GitHub repository."
+description: "Connect your ProductOS project to any MCP client — Claude, ChatGPT, Cursor, Windsurf, or VS Code — and sync the full generated codebase to your own GitHub repository."
 ---
 
 ProductOS integrations exist to keep your product context intact as it moves between tools. The research, PRD, and design your agents produce form a single record of what you are building and why. Integrations carry that record into the editor you code in and the repository you own, instead of leaving it behind as pasted text.
 
 ## What's available
 
-Three integrations are live today.
-
 <CardGroup cols={2}>
+  <Card title="MCP" icon="plug" href="/integrations/mcp">
+    The protocol behind every client integration. Connect any MCP client to your project's live context and its cloud sandbox.
+  </Card>
+
+  <Card title="MCP tools reference" icon="wrench" href="/integrations/mcp-tools">
+    All 55 tools a connected client can use, grouped by category, with the scope each one requires.
+  </Card>
+
   <Card title="Cursor" icon="terminal" href="/integrations/cursor">
     Pull your PRD, research, and design context into Cursor over MCP, so the code you write in the editor stays true to the spec.
   </Card>
+
   <Card title="Claude" icon="sparkles" href="/integrations/claude">
     Connect Claude to your ProductOS project over MCP and reason over the real product context, with no copy-paste and no drift.
   </Card>
+
   <Card title="GitHub" icon="git-branch" href="/integrations/github">
     Sync the full generated codebase to your own GitHub repo, review real diffs, and deploy from the branch you control.
   </Card>
-  <Card title="MCP" icon="plug" href="/integrations/mcp">
-    Understand the protocol behind the Cursor and Claude integrations and what ProductOS exposes over it.
-  </Card>
 </CardGroup>
+
+Cursor and Claude have their own walkthroughs, but the MCP server is not limited to them — **any MCP-capable client works**, including ChatGPT, Windsurf, and VS Code.
 
 Vercel, Figma, and Slack integrations are on the roadmap: one-click deploys to your own Vercel project, round-tripping generated screens into Figma, and pushing research findings, PRD updates, and ship notifications into Slack channels.
 
+## Connect over MCP
+
+Every client connects to the same endpoint:
+
+```text
+https://beta.productos.dev/api/mcp/connect
+```
+
+Most clients take the URL on its own and open a browser to authorize. For clients configured with a JSON file, the entry looks like this:
+
+```json
+{
+  "mcpServers": {
+    "productos": {
+      "url": "https://beta.productos.dev/api/mcp/connect"
+    }
+  }
+}
+```
+
+<Steps>
+  <Step title="Add the endpoint to your client">
+    Paste the URL into your client's MCP configuration — Cursor's MCP settings, Claude's connector settings, or the equivalent.
+  </Step>
+  <Step title="Authorize and choose what to share">
+    The client opens a browser to sign you in. You then pick which organization or projects the connection can reach, and at what level: read, read and write, or full development.
+  </Step>
+  <Step title="Work against live context">
+    The client can now read your project and, depending on the level you granted, edit files, run commands, and deploy.
+  </Step>
+</Steps>
+
+You do not put a project id in the URL. The connection resolves to whatever you select while authorizing, so one endpoint works for every account. To manage or revoke a connection later — or to mint an API key for a script or CI instead of using the browser flow — open **Settings → MCP Access** in ProductOS.
+
+<Note>
+  The access level you choose is a hard ceiling. A read-only connection can never write, and a write is refused mid-session if you lose access to the project. See the [tools reference](/integrations/mcp-tools) for which scope each tool requires.
+</Note>
+
 ## Why MCP
 
-Cursor and Claude connect over the Model Context Protocol (MCP), an open standard for connecting AI assistants to real context sources. Instead of shipping your product context around as pasted text, ProductOS exposes it as a live source those tools can read and write:
+Clients connect over the Model Context Protocol (MCP), an open standard for connecting AI assistants to real context sources. Instead of shipping your product context around as pasted text, ProductOS exposes it as a live source those tools can read and write:
 
 - **Context, not copy-paste.** The AI client reads your live ProductOS project, the brief, the PRD, and the design decisions, instead of a stale snapshot you pasted into a prompt.
-- **One source of truth.** Cursor and Claude both read the same shared context. Whichever tool you open, the assistant sees the same requirements and constraints.
+- **One source of truth.** Every connected client reads the same shared context. Whichever tool you open, the assistant sees the same requirements and constraints.
 - **Bidirectional by design.** MCP is a two-way channel. Tools can read your product context and write work back into it, so nothing you do in the editor gets lost.
+- **More than context.** The same connection exposes the project's cloud sandbox — files, a shell, databases, deployments, and a headless browser — so a client can build and ship, not just read.
 
 Read more in [What is MCP](/integrations/mcp).
 
@@ -43,7 +89,7 @@ Read more in [What is MCP](/integrations/mcp).
     Research, PRD, and design agents produce the shared context: the single record of what you are building and why.
   </Step>
   <Step title="Work in your own tools">
-    Open Cursor or Claude over MCP and code, refine, or reason against that live context instead of a blank page.
+    Connect your client over MCP and code, refine, or reason against that live context instead of a blank page.
   </Step>
   <Step title="Own the output on GitHub">
     Sync the full codebase to your repo, review real diffs, and deploy from the branch you control. There is no export wall.
@@ -54,4 +100,4 @@ Integrations are the entrances and exits of the ProductOS pipeline, not bolt-ons
 
 ## Do integrations cost extra?
 
-No. You can start free, and the MCP connection to Cursor and Claude and the GitHub code sync are part of the core ProductOS workflow. Connect them from your project settings and start pulling context into your tools.
+No. You can start free, and both the MCP connection and the GitHub code sync are part of the core ProductOS workflow. Connect them from your project settings and start pulling context into your tools.
