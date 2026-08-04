@@ -11,6 +11,8 @@ The ProductOS Claude integration connects Claude to your project over [MCP](/int
 - **The research.** Market and user findings are part of the context, so Claude reasons with the evidence behind the product instead of generic assumptions.
 - **The design.** Flows and UI decisions are visible to Claude, keeping its suggestions consistent with the intended experience.
 
+Depending on the access level you grant, Claude can also work in the project's cloud sandbox — read and edit files, run commands, and deploy. See the [tools reference](/integrations/mcp-tools) for the full list.
+
 ## Why connect Claude
 
 Teams reach for Claude to plan, spec, and reason through hard product decisions. The missing piece has always been context:
@@ -19,19 +21,33 @@ Teams reach for Claude to plan, spec, and reason through hard product decisions.
 - **Grounded reasoning.** When Claude can see the requirements and the research, its output stops drifting. You get analysis and drafts that hold up against the actual product definition.
 - **Results flow back.** MCP is bidirectional, so updates Claude makes are written back into the shared context where the rest of the pipeline can use them.
 
-## Connect in three steps
+## Connect Claude
+
+The server URL is the same for everyone:
+
+```text
+https://beta.productos.dev/api/mcp/connect
+```
 
 <Steps>
-  <Step title="Open your ProductOS project">
-    Choose the project you want Claude to reason over and open its integration settings to reveal the MCP connection.
+  <Step title="Add the connector">
+    In **Claude.ai** or **Claude Desktop**, open Settings → Connectors → **Add custom connector** and paste the URL above.
+
+    In **Claude Code**, run:
+
+    ```bash
+    claude mcp add --transport http productos https://beta.productos.dev/api/mcp/connect
+    ```
   </Step>
-  <Step title="Add the MCP server to Claude">
-    Connect the ProductOS MCP endpoint in Claude's connector settings and authorize it. Claude can now read your project as a live context source.
+  <Step title="Authorize and choose what to share">
+    Claude opens a browser to sign you in. Pick which organization or projects the connection can reach, and at what level: read, read and write, or full development.
   </Step>
   <Step title="Reason over live context">
     Ask Claude to refine the spec, pressure-test a flow, or draft the next iteration.
   </Step>
 </Steps>
+
+There is no project id in the URL. You choose what the connection can reach while authorizing, so the same endpoint works for every account. To revoke a connection later, or to mint an API key instead of using the browser flow, open **Settings → MCP Access** in ProductOS.
 
 ## What connected Claude is good at
 
@@ -41,8 +57,8 @@ Teams reach for Claude to plan, spec, and reason through hard product decisions.
 
 ## Claude vs Cursor: which one?
 
-Both integrations expose the same project context over the same protocol. The difference is where you work: Cursor is the editor, where the connected context steers code generation; Claude is where you plan, spec, and reason before and between builds. Many teams use both, and because they read one shared context, nothing diverges between them. See the [Cursor integration](/integrations/cursor).
+Both integrations expose the same project over the same protocol and the same endpoint. The difference is where you work: Cursor is the editor, where the connected context steers code generation; Claude is where you plan, spec, and reason before and between builds. Many teams use both, and because they read one shared context, nothing diverges between them. See the [Cursor integration](/integrations/cursor).
 
 <Note>
-Whatever you produce with Claude connected remains yours. The code side of the pipeline syncs to your own repository through the [GitHub integration](/integrations/github).
+  Whatever you produce with Claude connected remains yours. The code side of the pipeline syncs to your own repository through the [GitHub integration](/integrations/github).
 </Note>
