@@ -8,9 +8,42 @@
 
 ## The ask, in one line
 
-Add ProductOS's OAuth callback URIs to the AWS Sign-in allow-list for the
-`aws-mcp.amazonaws.com` service principal, so ProductOS can be listed alongside
-Claude Code, Cursor, Devin, Kiro and the other supported MCP clients.
+Add ProductOS's OAuth callback URIs to the **Supported Redirect URIs for DCR**
+table for the AWS MCP Server, so ProductOS is listed alongside Lovable, Replit
+and Vercel v0.
+
+> **There is no self-service path.** That table is maintained by AWS and
+> published at
+> <https://docs.aws.amazon.com/signin/latest/userguide/aws-mcp-server.html>.
+> It cannot be edited from the AWS console, an API, or IAM. The
+> `signin:OAuthRedirectUri` condition key only lets an *organization narrow*
+> which of the already-approved URIs its own users may use — it cannot widen
+> the list. Getting added is a request to AWS.
+
+## Precedent — peer platforms are already approved
+
+The published table (retrieved 2026-08-04) already includes hosted AI
+app-builder platforms whose redirect URIs live on their own domains:
+
+| OAuth client | Redirect URI(s) |
+| --- | --- |
+| Localhost | `localhost`, `127.0.0.1` |
+| Claude | `https://claude.ai/*` |
+| Cursor Desktop | `cursor://anysphere.cursor-mcp/oauth/callback` |
+| Cursor Web | `https://www.cursor.com/agents/mcp/oauth/callback` |
+| Visual Studio Code | `vscode://*` |
+| Visual Studio Code (Web) | `https://vscode.dev/*` |
+| ChatGPT | `https://chatgpt.com/*` |
+| ChatGPT Connectors | `https://chatgpt.com/connector_platform_oauth_redirect` |
+| **Replit** | `https://replit.com/` |
+| **Lovable** | `https://lovable.app/*` |
+| **Lovable Developer** | `https://lovable.dev/*` |
+| **Vercel v0** | `https://api.v0.dev/v1/mcp-servers/oauth/callback` |
+
+**Lovable, Replit and Vercel v0 are the closest analogues to ProductOS** — hosted
+platforms where an AI agent builds and deploys an application into the user's
+own cloud account. This is not a novel category for AWS to approve; it is an
+existing one that ProductOS belongs to. Lead the request with this.
 
 **URIs to allow-list**
 
@@ -104,8 +137,32 @@ the user runs) as the credential, rather than a stored long-lived key. See
 
 ## Where to send it
 
-- AWS account team / TAM, if one is assigned to account `300207323857`.
-- Otherwise the AWS MCP Server feedback channel referenced in the Agent Toolkit
-  user guide, or the `awslabs` GitHub repo for the MCP server.
-- Include: the reproduction above, the three URIs, and section "Why this is a
-  reasonable client to allow-list" verbatim.
+There is no form or console page for this. In rough order of likely success:
+
+1. **AWS account team / Technical Account Manager** for account `300207323857`,
+   if one is assigned. This is the fastest route when it exists — ask them to
+   route it to the AWS Sign-in / AWS MCP Server service team.
+2. **AWS Support case** (Account & Billing → Service limit / feature request),
+   category AWS Sign-in. Title it *"Add redirect URI to Supported Redirect URIs
+   for DCR — AWS MCP Server"* and cite the published table.
+3. **`awslabs` GitHub** — open an issue on the AWS MCP Server / Agent Toolkit
+   repo. The peer platforms in the table were plausibly onboarded through
+   partner conversations, so a public issue also surfaces the ask.
+4. **AWS Partner Network**, if ProductOS is (or becomes) a partner — this is the
+   channel Lovable/Replit/v0 most likely used.
+
+Include, in this order: the precedent table with Lovable/Replit/v0 highlighted,
+the three URIs, the reproduction, and the "Why this is a reasonable client"
+section verbatim.
+
+## Note if you speak to AWS directly
+
+Two things are worth asking in the same conversation, because they affect
+whether the connector needs the allow-list at all:
+
+- Is the **client-credentials flow** (`signin create-oauth2-token-with-iam`,
+  `--resource aws-mcp.amazonaws.com`) supported for a third-party hosted service
+  that holds a customer's cross-account role? If yes, ProductOS can ship without
+  waiting for the allow-list, since that flow has no redirect URI.
+- Is there a **timeline or criteria** for allow-list additions? That decides
+  whether the role-based path is a stopgap or the permanent design.
