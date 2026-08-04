@@ -5,19 +5,25 @@ description: "What the Model Context Protocol is, why ProductOS integrates over 
 
 The Model Context Protocol (MCP) is an open standard that lets AI clients read from and write to external context sources through one consistent interface. A service implements the protocol once, and any MCP-capable client, such as Cursor or Claude, can discover and use it without custom integration code.
 
-ProductOS uses MCP to expose your project as a live context source. Instead of pasting your PRD into a chat window and hoping it sticks, you connect the tool once, and it works against the actual product context.
+ProductOS uses MCP to expose your project as a live context source — and, beyond context, as a full remote development environment. Instead of pasting your PRD into a chat window and hoping it sticks, you connect the tool once, and it works against the actual product context.
 
 ## What ProductOS exposes over MCP
 
 Your ProductOS project context is available in Cursor and Claude over MCP. That context includes:
 
 | Context | What the connected tool sees |
-|---------|------------------------------|
+| --- | --- |
 | **The PRD** | Live product requirements: scope, user stories, and acceptance criteria, so generated code and analysis answer to the spec instead of guessing. |
 | **The research** | Market findings and user insights, so implementation and product decisions carry the reasoning behind the product. |
 | **The designs** | Flows and UI decisions, keeping output aligned with the intended experience. |
 
 Because both clients read the same source, whatever you open sees the same requirements and the same constraints. The context is live: changes to the product definition surface in the connected tool instead of going stale.
+
+## Beyond context: the full tool surface
+
+Context is only part of the connection. The ProductOS MCP server also exposes your project's cloud sandbox — files, a shell, sandbox lifecycle, databases and storage, GitHub sync, deployments, a headless browser, mobile publishing, and multi-surface Product orchestration. That's **55 tools**, each gated behind the scope you grant the connection (`project:read`, `project:write`, or `project:exec`), so a connected agent can go from reading your spec to editing files, running builds, and shipping to production — all remote, with no local clone.
+
+See the [MCP tools reference](/integrations/mcp-tools) for the complete list, grouped by category with the scope each tool requires.
 
 ## Why a protocol instead of copy-paste
 
@@ -44,7 +50,7 @@ The connection flow is the same for any MCP client:
 Client-specific walkthroughs: [Cursor](/integrations/cursor) and [Claude](/integrations/claude).
 
 <Note>
-The MCP connection is part of the core ProductOS workflow. You can start free; no paid plan is required to connect Cursor or Claude.
+  The MCP connection is part of the core ProductOS workflow. You can start free; no paid plan is required to connect Cursor or Claude.
 </Note>
 
 ## MCP and code ownership

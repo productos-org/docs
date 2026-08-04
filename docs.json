@@ -138,6 +138,7 @@
             "pages": [
               "integrations/overview",
               "integrations/mcp",
+              "integrations/mcp-tools",
               "integrations/cursor",
               "integrations/claude",
               "integrations/github"
