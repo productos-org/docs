@@ -137,10 +137,20 @@
             "group": "Integrations",
             "pages": [
               "integrations/overview",
-              "integrations/mcp",
-              "integrations/mcp-tools",
-              "integrations/cursor",
-              "integrations/claude",
+              {
+                "group": "MCP",
+                "pages": [
+                  "integrations/mcp",
+                  "integrations/mcp-tools"
+                ]
+              },
+              {
+                "group": "Clients",
+                "pages": [
+                  "integrations/cursor",
+                  "integrations/claude"
+                ]
+              },
               "integrations/github"
             ]
           }
