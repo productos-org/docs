@@ -13,6 +13,8 @@ Three parts of your project context come with the connection:
 - **The research.** Market findings and user insights come along, so implementation decisions carry the reasoning behind the product.
 - **The design.** Flows and UI decisions are visible to the editor, keeping the code you write aligned with the intended experience.
 
+Depending on the access level you grant, Cursor can also work in the project's cloud sandbox — read and edit files, run commands, provision a database, and deploy. See the [tools reference](/integrations/mcp-tools) for the full list.
+
 ## Why connect Cursor
 
 PMs and technical founders increasingly live in Cursor. The problem is not the editor; it is that the editor does not know what you are actually building. The MCP connection closes that gap:
@@ -21,19 +23,39 @@ PMs and technical founders increasingly live in Cursor. The problem is not the e
 - **Spec-true generation.** When the assistant can see the requirements, its suggestions stop drifting. You get code that matches the product you defined, not a plausible-looking tangent.
 - **Always current.** Because the context is live, changes to the product definition surface in the editor instead of going stale.
 
-## Connect in three steps
+## Connect Cursor
+
+The server URL is the same for everyone:
+
+```text
+https://beta.productos.dev/api/mcp/connect
+```
 
 <Steps>
-  <Step title="Open your ProductOS project">
-    Pick the project whose context you want in the editor and open its integration settings to reveal the MCP connection.
+  <Step title="Add the MCP server">
+    Open Settings → **Cursor Settings** → **MCP** → **Add new MCP server** and paste the URL above.
+
+    You can also commit it to the project by creating `.cursor/mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "productos": {
+          "url": "https://beta.productos.dev/api/mcp/connect"
+        }
+      }
+    }
+    ```
   </Step>
-  <Step title="Add the MCP server to Cursor">
-    Add the ProductOS MCP endpoint to Cursor's MCP configuration and authorize it. The editor now sees your project as a context source.
+  <Step title="Authorize and choose what to share">
+    Cursor opens a browser to sign you in. Pick which organization or projects the connection can reach, and at what level: read, read and write, or full development.
   </Step>
   <Step title="Code against live context">
     Ask Cursor to build a feature and it reasons over your real PRD, research, and design.
   </Step>
 </Steps>
+
+There is no project id in the URL. You choose what the connection can reach while authorizing, so the same endpoint works for every account. To revoke a connection later, or to mint an API key for CI instead of using the browser flow, open **Settings → MCP Access** in ProductOS.
 
 ## What context in the editor unlocks
 
@@ -42,11 +64,11 @@ PMs and technical founders increasingly live in Cursor. The problem is not the e
 - **Keep code and product in sync.** The live connection means the editor and the product definition never diverge silently.
 
 <Tip>
-You do not have to be technical to use this integration. It brings the PRD, research, and design into the editor, so a product manager can direct Cursor with the same source of truth an engineer uses: you describe what you want, and Cursor builds against the spec.
+  You do not have to be technical to use this integration. It brings the PRD, research, and design into the editor, so a product manager can direct Cursor with the same source of truth an engineer uses: you describe what you want, and Cursor builds against the spec.
 </Tip>
 
 ## Ownership is unchanged
 
-The integration is about context, not lock-in. Whatever Cursor produces is your code. You can sync the full codebase to your own GitHub repo through the [GitHub integration](/integrations/github) and deploy it anywhere.
+The integration is about access, not lock-in. Whatever Cursor produces is your code. You can sync the full codebase to your own GitHub repo through the [GitHub integration](/integrations/github) and deploy it anywhere.
 
-Prefer to reason and plan before you code? The same context flows into the [Claude integration](/integrations/claude).
+Prefer to reason and plan before you code? The same connection works with the [Claude integration](/integrations/claude).
