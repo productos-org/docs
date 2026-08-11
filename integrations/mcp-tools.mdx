@@ -1,10 +1,10 @@
 ---
 title: "MCP tools reference"
-description: "Every tool the ProductOS MCP server exposes to connected AI clients — 57 tools across files, shell, skills, sandboxes, databases, deployments, browser automation, mobile publishing, and multi-surface Product orchestration."
+description: "Every tool the ProductOS MCP server exposes to connected AI clients — 58 tools across files, shell, skills, sandboxes, databases, deployments, browser automation, mobile publishing, and multi-surface Product orchestration."
 sidebarTitle: "Tools reference"
 ---
 
-The ProductOS MCP server exposes your entire project — not just its context — to any MCP client such as Claude, ChatGPT, Cursor, Windsurf, or VS Code. Beyond reading your PRD, research, and designs, a connected agent gets the full project sandbox: files, a shell, reusable skills, sandbox lifecycle, databases and storage, GitHub sync, deployments, a headless browser, mobile publishing, and multi-surface Product orchestration — **57 tools in total**.
+The ProductOS MCP server exposes your entire project — not just its context — to any MCP client such as Claude, ChatGPT, Cursor, Windsurf, or VS Code. Beyond reading your PRD, research, and designs, a connected agent gets the full project sandbox: files, a shell, reusable skills, sandbox lifecycle, databases and storage, GitHub sync, deployments, a headless browser, mobile publishing, and multi-surface Product orchestration — **58 tools in total**.
 
 Every tool is project-scoped and permission-gated. A connection carries one or more scopes, and each tool requires at least one:
 
@@ -77,6 +77,13 @@ Workspace and project skills are managed in the app under **Settings → Skills*
 | --- | --- | --- |
 | `list_skills` | read | Every skill this connection can use, with a description and scope; filterable by name or category |
 | `get_skill` | read | The full instructions for one skill, as a `SKILL.md` document to follow |
+| `create_skill` | write | Save a new skill into this workspace or project, optionally offering it to the platform |
+
+### Writing a skill back
+
+When an agent works out a procedure worth keeping, `create_skill` saves it so the next session starts from it. The new skill is usable in your workspace immediately.
+
+Publishing to *every* workspace is not self-service: set `submit_to_platform: true` (or press **Submit to platform** in Settings → Skills) and the skill enters a review queue. A ProductOS admin then publishes a platform copy or declines with a reason. Either way you keep your own copy, and a published skill arrives opt-in rather than always-on.
 
 The same skills are exposed through two other MCP surfaces, so you can reach them whichever way your client prefers:
 
@@ -84,7 +91,7 @@ The same skills are exposed through two other MCP surfaces, so you can reach the
 - **Resources** — each skill is readable at `skill://<slug>`, so clients with an @-mention picker can attach one as context.
 
 <Note>
-  Skills are read-only over MCP. Creating, editing, and deleting them happens in the ProductOS app; a connected agent can follow a skill but cannot rewrite it.
+  A connected agent can read any skill it is entitled to and create new ones, but it cannot edit or delete existing skills, and it cannot publish anything platform-wide on its own. Those stay in the ProductOS app and the admin console.
 </Note>
 
 ## Shell and dependencies
