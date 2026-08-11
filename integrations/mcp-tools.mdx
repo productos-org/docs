@@ -1,10 +1,10 @@
 ---
 title: "MCP tools reference"
-description: "Every tool the ProductOS MCP server exposes to connected AI clients — 55 tools across files, shell, sandboxes, databases, deployments, browser automation, mobile publishing, and multi-surface Product orchestration."
+description: "Every tool the ProductOS MCP server exposes to connected AI clients — 57 tools across files, shell, skills, sandboxes, databases, deployments, browser automation, mobile publishing, and multi-surface Product orchestration."
 sidebarTitle: "Tools reference"
 ---
 
-The ProductOS MCP server exposes your entire project — not just its context — to any MCP client such as Claude, ChatGPT, Cursor, Windsurf, or VS Code. Beyond reading your PRD, research, and designs, a connected agent gets the full project sandbox: files, a shell, sandbox lifecycle, databases and storage, GitHub sync, deployments, a headless browser, mobile publishing, and multi-surface Product orchestration — **55 tools in total**.
+The ProductOS MCP server exposes your entire project — not just its context — to any MCP client such as Claude, ChatGPT, Cursor, Windsurf, or VS Code. Beyond reading your PRD, research, and designs, a connected agent gets the full project sandbox: files, a shell, reusable skills, sandbox lifecycle, databases and storage, GitHub sync, deployments, a headless browser, mobile publishing, and multi-surface Product orchestration — **57 tools in total**.
 
 Every tool is project-scoped and permission-gated. A connection carries one or more scopes, and each tool requires at least one:
 
@@ -60,6 +60,32 @@ All file tools operate on the project's cloud sandbox at `/home/user`. Every mut
 | `remember_fact` | write | Persist a durable fact into project memory |
 | `write_wiki_section` | write | Write or update a section of the project wiki |
 | `write_prd_section` | write | Write or update a section of the PRD |
+
+## Skills
+
+Skills are reusable playbooks — step-by-step instructions for work that recurs, such as cloning a website, running an SEO pass, or following your team's own conventions. The in-app agents receive them automatically; these tools are how a connected external client gets them too.
+
+A connection sees three kinds at once:
+
+- **Built-in skills** that ship with ProductOS — the same methodologies its own agents run on: `web-development`, `code-review`, `seo-optimization`, `analytics`, `aws-deployment`, `quality-standards`, `clone-website`, `browser-automation`.
+- **Workspace skills** your team writes, shared across every project.
+- **Project skills** scoped to one project.
+
+Workspace and project skills are managed in the app under **Settings → Skills**. Where a skill you define shares a slug with a built-in, yours takes precedence — that's how you customise a built-in without losing it.
+
+| Tool | Scope | What it does |
+| --- | --- | --- |
+| `list_skills` | read | Every skill this connection can use, with a description and scope; filterable by name or category |
+| `get_skill` | read | The full instructions for one skill, as a `SKILL.md` document to follow |
+
+The same skills are exposed through two other MCP surfaces, so you can reach them whichever way your client prefers:
+
+- **Prompts** — each skill is a slash command: `/clone-website` in Claude Code, `/mcp-productos-clone-website` in Cursor. Pass what you want it applied to as the `input` argument, e.g. a URL. Up to 40 skills are registered this way; the rest stay available through `list_skills`.
+- **Resources** — each skill is readable at `skill://<slug>`, so clients with an @-mention picker can attach one as context.
+
+<Note>
+  Skills are read-only over MCP. Creating, editing, and deleting them happens in the ProductOS app; a connected agent can follow a skill but cannot rewrite it.
+</Note>
 
 ## Shell and dependencies
 
